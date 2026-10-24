@@ -1,0 +1,3335 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Brada Perfume - لوحة التحكم</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@300;400;500;600;700;800;900&family=Playfair+Display:wght@700;800;900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
+    <style>
+/* ============================================
+   BRADA PERFUME - Premium Dashboard Styles
+   ============================================ */
+
+:root {
+    --primary: #8B1A1A;
+    --primary-light: #A52A2A;
+    --primary-dark: #5C0E0E;
+    --primary-glow: rgba(139, 26, 26, 0.15);
+    --gold: #C9A84C;
+    --gold-light: #E8D48B;
+    --secondary: #1A1A2E;
+    --accent: #C0392B;
+    --success: #00C853;
+    --success-bg: rgba(0, 200, 83, 0.1);
+    --warning: #FFB300;
+    --warning-bg: rgba(255, 179, 0, 0.1);
+    --danger: #FF1744;
+    --danger-bg: rgba(255, 23, 68, 0.1);
+    --info: #2979FF;
+    --info-bg: rgba(41, 121, 255, 0.1);
+    --bg-main: #F4F6FA;
+    --bg-card: #FFFFFF;
+    --bg-sidebar: linear-gradient(180deg, #1A1A2E 0%, #16213E 50%, #0F3460 100%);
+    --text-primary: #1A1A2E;
+    --text-secondary: #6C757D;
+    --text-muted: #ADB5BD;
+    --border: #E9ECEF;
+    --border-light: #F1F3F5;
+    --shadow-sm: 0 1px 3px rgba(0,0,0,0.06);
+    --shadow: 0 4px 15px rgba(0,0,0,0.08);
+    --shadow-lg: 0 10px 40px rgba(0,0,0,0.12);
+    --shadow-card: 0 2px 12px rgba(0,0,0,0.06), 0 0 0 1px rgba(0,0,0,0.02);
+    --radius: 16px;
+    --radius-md: 12px;
+    --radius-sm: 8px;
+    --transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    --sidebar-width: 280px;
+}
+
+* { margin: 0; padding: 0; box-sizing: border-box; }
+
+body {
+    font-family: 'Cairo', sans-serif;
+    background: var(--bg-main);
+    color: var(--text-primary);
+    direction: rtl;
+    display: flex;
+    min-height: 100vh;
+    -webkit-font-smoothing: antialiased;
+}
+
+::-webkit-scrollbar { width: 5px; }
+::-webkit-scrollbar-track { background: transparent; }
+::-webkit-scrollbar-thumb { background: var(--primary-light); border-radius: 10px; }
+
+/* ============================================
+   SIDEBAR
+   ============================================ */
+.sidebar {
+    width: var(--sidebar-width);
+    background: var(--bg-sidebar);
+    position: fixed;
+    top: 0;
+    right: 0;
+    height: 100vh;
+    z-index: 1000;
+    transition: var(--transition);
+    overflow-y: auto;
+    display: flex;
+    flex-direction: column;
+    box-shadow: -5px 0 30px rgba(0,0,0,0.15);
+}
+
+.sidebar-header {
+    padding: 28px 20px 20px;
+    text-align: center;
+    border-bottom: 1px solid rgba(255,255,255,0.08);
+    background: rgba(0,0,0,0.15);
+}
+
+.logo-wrapper {
+    width: 100px;
+    height: 100px;
+    margin: 0 auto 12px;
+    background: #fff;
+    border-radius: 20px;
+    padding: 8px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0 8px 30px rgba(0,0,0,0.3);
+    transition: var(--transition);
+}
+
+.logo-wrapper:hover {
+    transform: scale(1.05);
+    box-shadow: 0 12px 40px rgba(139,26,26,0.4);
+}
+
+.logo-img {
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+}
+
+.brand-name {
+    font-family: 'Playfair Display', serif;
+    font-size: 1.6rem;
+    font-weight: 800;
+    color: #fff;
+    letter-spacing: 3px;
+    margin-top: 4px;
+}
+
+.brand-sub {
+    color: var(--gold);
+    font-size: 0.75rem;
+    font-weight: 600;
+    margin-top: 2px;
+    letter-spacing: 1px;
+}
+
+.sidebar-nav {
+    padding: 16px 14px;
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    gap: 3px;
+}
+
+.nav-item {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 13px 18px;
+    color: rgba(255,255,255,0.6);
+    text-decoration: none;
+    border-radius: var(--radius-sm);
+    transition: var(--transition);
+    font-size: 0.92rem;
+    font-weight: 600;
+    position: relative;
+}
+
+.nav-item:hover {
+    background: rgba(255,255,255,0.08);
+    color: #fff;
+    transform: translateX(-4px);
+}
+
+.nav-item.active {
+    background: linear-gradient(135deg, var(--primary), var(--primary-light));
+    color: #fff;
+    box-shadow: 0 4px 15px rgba(139,26,26,0.4);
+}
+
+.nav-item i {
+    width: 24px;
+    text-align: center;
+    font-size: 1.05rem;
+}
+
+.sidebar-footer {
+    padding: 16px;
+    text-align: center;
+    border-top: 1px solid rgba(255,255,255,0.06);
+    color: rgba(255,255,255,0.3);
+    font-size: 0.7rem;
+}
+
+/* ============================================
+   MAIN CONTENT
+   ============================================ */
+.main-content {
+    flex: 1;
+    margin-right: var(--sidebar-width);
+    min-height: 100vh;
+}
+
+/* ============================================
+   TOPBAR
+   ============================================ */
+.topbar {
+    background: var(--bg-card);
+    padding: 14px 30px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    box-shadow: var(--shadow-sm);
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    border-bottom: 1px solid var(--border-light);
+}
+
+.menu-toggle {
+    display: none;
+    background: none;
+    border: none;
+    font-size: 1.3rem;
+    color: var(--text-primary);
+    cursor: pointer;
+    padding: 6px;
+}
+
+.topbar-brand {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.topbar-logo {
+    width: 36px;
+    height: 36px;
+    object-fit: contain;
+    border-radius: 8px;
+}
+
+.topbar-brand span {
+    font-family: 'Playfair Display', serif;
+    font-size: 1.1rem;
+    font-weight: 800;
+    color: var(--primary);
+    letter-spacing: 2px;
+}
+
+.topbar-right {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+}
+
+.date-display {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    color: var(--text-secondary);
+    font-size: 0.85rem;
+    background: var(--bg-main);
+    padding: 8px 14px;
+    border-radius: 25px;
+}
+
+.date-display i { color: var(--primary); }
+
+/* ============================================
+   PAGES
+   ============================================ */
+.page {
+    display: none;
+    padding: 28px;
+    animation: pageIn 0.5s ease;
+}
+
+.page.active { display: block; }
+
+@keyframes pageIn {
+    from { opacity: 0; transform: translateY(15px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+.page-header {
+    margin-bottom: 24px;
+}
+
+.page-title {
+    font-size: 1.5rem;
+    font-weight: 800;
+    color: var(--text-primary);
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.page-title i {
+    color: var(--primary);
+    font-size: 1.3rem;
+}
+
+.section-header {
+    margin: 28px 0 16px;
+}
+
+.section-header h2 {
+    font-size: 1.15rem;
+    font-weight: 700;
+    color: var(--text-primary);
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.section-header h2 i {
+    color: var(--primary);
+    font-size: 1rem;
+}
+
+/* ============================================
+   SUMMARY CARDS
+   ============================================ */
+.cards-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(230px, 1fr));
+    gap: 18px;
+    margin-bottom: 10px;
+}
+
+.summary-card {
+    border-radius: var(--radius);
+    padding: 22px 20px;
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    position: relative;
+    overflow: hidden;
+    color: #fff;
+    transition: var(--transition);
+    cursor: default;
+}
+
+.summary-card:hover {
+    transform: translateY(-4px);
+    box-shadow: var(--shadow-lg);
+}
+
+.gradient-blue { background: linear-gradient(135deg, #667eea, #764ba2); }
+.gradient-green { background: linear-gradient(135deg, #11998e, #38ef7d); }
+.gradient-purple { background: linear-gradient(135deg, #7F00FF, #E100FF); }
+.gradient-orange { background: linear-gradient(135deg, #f12711, #f5af19); }
+
+.sc-icon {
+    width: 54px;
+    height: 54px;
+    background: rgba(255,255,255,0.2);
+    border-radius: 14px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.3rem;
+    flex-shrink: 0;
+    backdrop-filter: blur(5px);
+}
+
+.sc-info { display: flex; flex-direction: column; }
+.sc-value { font-size: 1.35rem; font-weight: 800; line-height: 1.2; }
+.sc-label { font-size: 0.8rem; opacity: 0.9; font-weight: 500; }
+
+.sc-decoration {
+    position: absolute;
+    width: 120px;
+    height: 120px;
+    border-radius: 50%;
+    background: rgba(255,255,255,0.08);
+    top: -40px;
+    left: -30px;
+}
+
+/* ============================================
+   BALANCE CARDS
+   ============================================ */
+.balance-cards {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 18px;
+    margin-bottom: 10px;
+}
+
+.balance-card {
+    background: var(--bg-card);
+    border-radius: var(--radius);
+    padding: 22px;
+    box-shadow: var(--shadow-card);
+    border-top: 4px solid;
+    transition: var(--transition);
+}
+
+.balance-card:hover {
+    box-shadow: var(--shadow-lg);
+    transform: translateY(-2px);
+}
+
+.owner-balance { border-top-color: var(--primary); }
+.amr-balance { border-top-color: var(--info); }
+
+.bal-header {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    margin-bottom: 16px;
+}
+
+.bal-avatar {
+    width: 44px;
+    height: 44px;
+    border-radius: 12px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.1rem;
+    flex-shrink: 0;
+}
+
+.bal-avatar.large {
+    width: 56px;
+    height: 56px;
+    font-size: 1.3rem;
+}
+
+.owner-balance .bal-avatar { background: var(--primary-glow); color: var(--primary); }
+.amr-balance .bal-avatar { background: var(--info-bg); color: var(--info); }
+
+.bal-name { font-weight: 700; font-size: 1rem; }
+.bal-subtitle { font-size: 0.75rem; color: var(--text-muted); }
+
+.bal-body { display: flex; flex-direction: column; gap: 8px; }
+
+.bal-row {
+    display: flex;
+    justify-content: space-between;
+    font-size: 0.88rem;
+    color: var(--text-secondary);
+}
+
+.bal-row .red { color: var(--danger); font-weight: 700; }
+.bal-row .green { color: var(--success); font-weight: 700; }
+.bal-row .bold { font-weight: 800; color: var(--text-primary); }
+
+.bal-divider {
+    height: 1px;
+    background: var(--border);
+    margin: 4px 0;
+}
+
+.bal-remaining {
+    font-size: 0.95rem;
+    font-weight: 700;
+    color: var(--text-primary) !important;
+}
+
+.bal-remaining span { color: var(--text-primary) !important; }
+
+.bal-big-remaining {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 12px;
+    background: var(--bg-main);
+    border-radius: var(--radius-sm);
+    margin-top: 4px;
+}
+
+.bal-big-remaining span:first-child {
+    font-size: 0.8rem;
+    color: var(--text-muted);
+    font-weight: 600;
+}
+
+.remaining-value {
+    font-size: 1.8rem;
+    font-weight: 900;
+    color: var(--primary) !important;
+}
+
+/* ============================================
+   BEST SELLERS
+   ============================================ */
+.best-sellers {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 16px;
+    margin-bottom: 10px;
+}
+
+.best-seller-card {
+    background: var(--bg-card);
+    border-radius: var(--radius);
+    padding: 20px;
+    box-shadow: var(--shadow-card);
+    text-align: center;
+    transition: var(--transition);
+    position: relative;
+    overflow: hidden;
+}
+
+.best-seller-card:hover {
+    transform: translateY(-3px);
+    box-shadow: var(--shadow-lg);
+}
+
+.bs-rank {
+    position: absolute;
+    top: 10px;
+    right: 12px;
+    width: 30px;
+    height: 30px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: 900;
+    font-size: 0.8rem;
+}
+
+.bs-rank.gold { background: linear-gradient(135deg, #FFD700, #FFA500); color: #fff; }
+.bs-rank.silver { background: linear-gradient(135deg, #C0C0C0, #A0A0A0); color: #fff; }
+.bs-rank.bronze { background: linear-gradient(135deg, #CD7F32, #B87333); color: #fff; }
+.bs-rank.normal { background: var(--bg-main); color: var(--text-secondary); }
+
+.bs-icon {
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    background: var(--primary-glow);
+    color: var(--primary);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.2rem;
+    margin: 0 auto 10px;
+}
+
+.bs-name {
+    font-weight: 700;
+    font-size: 0.95rem;
+    margin-bottom: 4px;
+    color: var(--text-primary);
+}
+
+.bs-count {
+    font-size: 1.3rem;
+    font-weight: 900;
+    color: var(--primary);
+}
+
+.bs-label {
+    font-size: 0.75rem;
+    color: var(--text-muted);
+}
+
+/* ============================================
+   CHARTS
+   ============================================ */
+.charts-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 18px;
+    margin-bottom: 10px;
+}
+
+.chart-box {
+    background: var(--bg-card);
+    border-radius: var(--radius);
+    padding: 22px;
+    box-shadow: var(--shadow-card);
+}
+
+.chart-box h3 {
+    font-size: 0.95rem;
+    font-weight: 700;
+    color: var(--text-primary);
+    margin-bottom: 16px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.chart-box h3 i { color: var(--primary); }
+
+/* ============================================
+   FORMS
+   ============================================ */
+.form-card {
+    background: var(--bg-card);
+    border-radius: var(--radius);
+    padding: 26px;
+    box-shadow: var(--shadow-card);
+    margin-bottom: 20px;
+    border: 1px solid var(--border-light);
+}
+
+.form-title {
+    font-size: 1.05rem;
+    font-weight: 700;
+    color: var(--primary);
+    margin-bottom: 20px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding-bottom: 12px;
+    border-bottom: 2px solid var(--border-light);
+}
+
+.form-section-title {
+    font-size: 0.95rem;
+    font-weight: 700;
+    color: var(--secondary);
+    margin: 16px 0 12px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: 10px 14px;
+    background: var(--bg-main);
+    border-radius: var(--radius-sm);
+}
+
+.form-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 14px;
+    margin-bottom: 18px;
+}
+
+.form-group {
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+}
+
+.form-group.full-width {
+    grid-column: 1 / -1;
+}
+
+.form-group label {
+    font-size: 0.82rem;
+    font-weight: 700;
+    color: var(--text-secondary);
+    display: flex;
+    align-items: center;
+    gap: 5px;
+}
+
+.form-group label i { color: var(--primary); font-size: 0.75rem; }
+
+.form-group input,
+.form-group select {
+    padding: 10px 14px;
+    border: 2px solid var(--border);
+    border-radius: var(--radius-sm);
+    font-family: 'Cairo', sans-serif;
+    font-size: 0.9rem;
+    color: var(--text-primary);
+    transition: var(--transition);
+    background: #FAFBFC;
+    direction: rtl;
+}
+
+.form-group input:focus,
+.form-group select:focus {
+    outline: none;
+    border-color: var(--primary);
+    background: #fff;
+    box-shadow: 0 0 0 4px var(--primary-glow);
+}
+
+.form-group input::placeholder { color: var(--text-muted); }
+
+/* ============================================
+   BUTTONS
+   ============================================ */
+.btn {
+    padding: 11px 26px;
+    border: none;
+    border-radius: var(--radius-sm);
+    font-family: 'Cairo', sans-serif;
+    font-size: 0.92rem;
+    font-weight: 700;
+    cursor: pointer;
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    transition: var(--transition);
+}
+
+.btn:active { transform: scale(0.97); }
+
+.btn-primary {
+    background: linear-gradient(135deg, var(--primary), var(--primary-light));
+    color: #fff;
+    box-shadow: 0 4px 12px rgba(139,26,26,0.3);
+}
+.btn-primary:hover { box-shadow: 0 6px 20px rgba(139,26,26,0.4); transform: translateY(-1px); }
+
+.btn-success {
+    background: linear-gradient(135deg, #11998e, #38ef7d);
+    color: #fff;
+    box-shadow: 0 4px 12px rgba(17,153,142,0.3);
+}
+.btn-success:hover { box-shadow: 0 6px 20px rgba(17,153,142,0.4); transform: translateY(-1px); }
+
+.btn-danger {
+    background: var(--danger);
+    color: #fff;
+}
+.btn-danger:hover { background: #D50000; }
+
+.btn-secondary {
+    background: var(--border);
+    color: var(--text-primary);
+}
+
+.btn-export {
+    background: linear-gradient(135deg, #667eea, #764ba2);
+    color: #fff;
+    box-shadow: 0 4px 12px rgba(102,126,234,0.3);
+}
+.btn-export:hover { box-shadow: 0 6px 20px rgba(102,126,234,0.4); transform: translateY(-1px); }
+
+.btn-sm { padding: 6px 14px; font-size: 0.78rem; border-radius: 6px; }
+
+/* ============================================
+   TABLES
+   ============================================ */
+.table-card {
+    background: var(--bg-card);
+    border-radius: var(--radius);
+    box-shadow: var(--shadow-card);
+    overflow: hidden;
+    border: 1px solid var(--border-light);
+    overflow-x: auto;
+}
+
+.data-table {
+    width: 100%;
+    border-collapse: collapse;
+    min-width: 600px;
+}
+
+.data-table thead {
+    background: linear-gradient(135deg, var(--secondary), #16213E);
+}
+
+.data-table th {
+    padding: 13px 16px;
+    text-align: right;
+    font-size: 0.82rem;
+    font-weight: 700;
+    color: #fff;
+    white-space: nowrap;
+    letter-spacing: 0.3px;
+}
+
+.data-table td {
+    padding: 11px 16px;
+    border-bottom: 1px solid var(--border-light);
+    font-size: 0.87rem;
+}
+
+.data-table tbody tr {
+    transition: var(--transition);
+}
+
+.data-table tbody tr:hover {
+    background: #F8F9FF;
+}
+
+/* ============================================
+   FILTER BAR
+   ============================================ */
+.filter-bar {
+    background: var(--bg-card);
+    border-radius: var(--radius);
+    padding: 14px 20px;
+    display: flex;
+    align-items: center;
+    gap: 18px;
+    margin-bottom: 18px;
+    box-shadow: var(--shadow-card);
+    flex-wrap: wrap;
+    border: 1px solid var(--border-light);
+}
+
+.filter-group {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.filter-group label {
+    font-size: 0.82rem;
+    font-weight: 700;
+    color: var(--text-secondary);
+    white-space: nowrap;
+}
+
+.filter-group select,
+.filter-input {
+    padding: 8px 14px;
+    border: 2px solid var(--border);
+    border-radius: var(--radius-sm);
+    font-family: 'Cairo', sans-serif;
+    font-size: 0.85rem;
+    direction: rtl;
+    background: #FAFBFC;
+    transition: var(--transition);
+}
+
+.filter-input {
+    min-width: 250px;
+}
+
+.filter-group select:focus,
+.filter-input:focus {
+    outline: none;
+    border-color: var(--primary);
+    box-shadow: 0 0 0 4px var(--primary-glow);
+}
+
+/* ============================================
+   BADGES
+   ============================================ */
+.badge {
+    padding: 4px 12px;
+    border-radius: 20px;
+    font-size: 0.73rem;
+    font-weight: 700;
+    display: inline-block;
+    letter-spacing: 0.3px;
+}
+
+.badge-expense { background: var(--danger-bg); color: var(--danger); }
+.badge-sale { background: var(--success-bg); color: var(--success); }
+.badge-daily { background: var(--info-bg); color: var(--info); }
+.badge-monthly { background: rgba(142,68,173,0.1); color: #8E44AD; }
+.badge-owner { background: var(--primary-glow); color: var(--primary); }
+.badge-amr { background: var(--info-bg); color: var(--info); }
+
+/* ============================================
+   PROFITS PAGE
+   ============================================ */
+.profit-overview {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+    gap: 16px;
+    margin-bottom: 10px;
+}
+
+.po-card {
+    background: var(--bg-card);
+    border-radius: var(--radius);
+    padding: 20px;
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    box-shadow: var(--shadow-card);
+    border-right: 4px solid;
+    transition: var(--transition);
+}
+
+.po-card:hover { transform: translateY(-2px); box-shadow: var(--shadow); }
+
+.po-sales { border-color: var(--success); }
+.po-cost { border-color: var(--warning); }
+.po-ads { border-color: var(--danger); }
+.po-net { border-color: var(--primary); background: linear-gradient(135deg, var(--primary), var(--primary-light)); color: #fff; }
+
+.po-icon {
+    width: 46px;
+    height: 46px;
+    border-radius: 12px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.1rem;
+    flex-shrink: 0;
+}
+
+.po-sales .po-icon { background: var(--success-bg); color: var(--success); }
+.po-cost .po-icon { background: var(--warning-bg); color: var(--warning); }
+.po-ads .po-icon { background: var(--danger-bg); color: var(--danger); }
+.po-net .po-icon { background: rgba(255,255,255,0.2); color: #fff; }
+
+.po-label { font-size: 0.78rem; color: var(--text-muted); font-weight: 600; }
+.po-value { font-size: 1.2rem; font-weight: 800; display: block; }
+.po-net .po-label { color: rgba(255,255,255,0.8); }
+.po-net .po-value { color: #fff; }
+
+.profit-breakdown {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 18px;
+    margin-bottom: 10px;
+}
+
+.pb-card {
+    background: var(--bg-card);
+    border-radius: var(--radius);
+    padding: 22px;
+    box-shadow: var(--shadow-card);
+}
+
+.pb-card h3 {
+    font-size: 1rem;
+    font-weight: 700;
+    color: var(--primary);
+    margin-bottom: 16px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.pb-rows { display: flex; flex-direction: column; gap: 8px; }
+
+.pb-row {
+    display: flex;
+    justify-content: space-between;
+    font-size: 0.88rem;
+    padding: 8px 12px;
+    border-radius: 6px;
+    background: var(--bg-main);
+}
+
+.pb-row span:first-child { color: var(--text-secondary); font-weight: 600; }
+.pb-row span:last-child { font-weight: 800; }
+.pb-row .red { color: var(--danger); }
+.pb-row .green { color: var(--success); }
+
+.highlight-row {
+    background: var(--primary-glow) !important;
+    border: 1px solid rgba(139,26,26,0.2);
+}
+
+.highlight-row span { color: var(--primary) !important; }
+
+/* ============================================
+   REPORTS
+   ============================================ */
+.report-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(170px, 1fr));
+    gap: 14px;
+    margin-bottom: 10px;
+}
+
+.report-metric {
+    background: var(--bg-card);
+    border-radius: var(--radius-md);
+    padding: 18px 14px;
+    text-align: center;
+    box-shadow: var(--shadow-card);
+    transition: var(--transition);
+}
+
+.report-metric:hover { transform: translateY(-2px); }
+
+.report-metric .label {
+    font-size: 0.78rem;
+    color: var(--text-muted);
+    font-weight: 600;
+}
+
+.report-metric .value {
+    font-size: 1.2rem;
+    font-weight: 800;
+    margin-top: 4px;
+    display: block;
+}
+
+/* ============================================
+   TOAST
+   ============================================ */
+.toast {
+    position: fixed;
+    bottom: -80px;
+    left: 50%;
+    transform: translateX(-50%);
+    background: linear-gradient(135deg, #11998e, #38ef7d);
+    color: #fff;
+    padding: 14px 28px;
+    border-radius: 50px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    font-weight: 700;
+    font-size: 0.9rem;
+    transition: bottom 0.5s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+    z-index: 9999;
+    box-shadow: 0 8px 30px rgba(17,153,142,0.4);
+}
+
+.toast.show { bottom: 30px; }
+
+/* ============================================
+   MODAL
+   ============================================ */
+.modal-overlay {
+    position: fixed;
+    top: 0; left: 0;
+    width: 100%; height: 100%;
+    background: rgba(0,0,0,0.5);
+    backdrop-filter: blur(4px);
+    display: none;
+    align-items: center;
+    justify-content: center;
+    z-index: 9999;
+}
+
+.modal-overlay.show { display: flex; }
+
+.modal {
+    background: var(--bg-card);
+    border-radius: var(--radius);
+    padding: 36px;
+    text-align: center;
+    max-width: 400px;
+    width: 90%;
+    animation: modalIn 0.3s ease;
+    box-shadow: var(--shadow-lg);
+}
+
+@keyframes modalIn {
+    from { opacity: 0; transform: scale(0.9); }
+    to { opacity: 1; transform: scale(1); }
+}
+
+.modal-icon { font-size: 3rem; color: var(--warning); margin-bottom: 12px; }
+.modal h3 { font-size: 1.15rem; margin-bottom: 6px; }
+.modal p { color: var(--text-secondary); margin-bottom: 20px; font-size: 0.9rem; }
+.modal-actions { display: flex; justify-content: center; gap: 12px; }
+
+/* ============================================
+   EMPTY STATE
+   ============================================ */
+.empty-state {
+    text-align: center;
+    padding: 36px 20px;
+    color: var(--text-muted);
+}
+
+.empty-state i {
+    font-size: 2.5rem;
+    margin-bottom: 10px;
+    display: block;
+    opacity: 0.3;
+}
+
+.empty-state p { font-size: 0.9rem; }
+
+/* ============================================
+   RESPONSIVE & MOBILE OPTIMIZATIONS
+   ============================================ */
+.sidebar-close {
+    display: none;
+    position: absolute;
+    top: 14px;
+    left: 14px;
+    background: rgba(255, 255, 255, 0.15);
+    border: none;
+    color: #fff;
+    width: 36px;
+    height: 36px;
+    border-radius: 50%;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.1rem;
+    cursor: pointer;
+    z-index: 10;
+    transition: var(--transition);
+}
+
+.sidebar-close:hover {
+    background: rgba(255, 255, 255, 0.3);
+}
+
+.sidebar-backdrop {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(15, 23, 42, 0.65);
+    backdrop-filter: blur(4px);
+    -webkit-backdrop-filter: blur(4px);
+    z-index: 995;
+    opacity: 0;
+    visibility: hidden;
+    transition: all 0.3s ease;
+}
+
+.sidebar-backdrop.show {
+    opacity: 1;
+    visibility: visible;
+}
+
+.mobile-bottom-nav {
+    display: none;
+}
+
+@media (max-width: 1100px) {
+    .charts-grid, .balance-cards, .profit-breakdown { grid-template-columns: 1fr; }
+}
+
+@media (max-width: 768px) {
+    body {
+        padding-bottom: calc(70px + env(safe-area-inset-bottom, 0px));
+    }
+
+    .sidebar {
+        transform: translateX(100%);
+        width: 290px;
+        box-shadow: -8px 0 35px rgba(0, 0, 0, 0.35);
+        z-index: 1000;
+    }
+
+    .sidebar.open {
+        transform: translateX(0);
+    }
+
+    .sidebar-close {
+        display: flex;
+    }
+
+    .main-content {
+        margin-right: 0;
+    }
+
+    .menu-toggle {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        width: 40px;
+        height: 40px;
+        border-radius: 10px;
+        background: var(--bg-main);
+        color: var(--text-primary);
+    }
+
+    .topbar {
+        padding: 10px 16px;
+    }
+
+    .page {
+        padding: 16px 12px;
+    }
+
+    .page-title {
+        font-size: 1.25rem;
+    }
+
+    /* Cards */
+    .cards-grid {
+        grid-template-columns: 1fr 1fr;
+        gap: 12px;
+    }
+
+    .summary-card {
+        padding: 16px 14px;
+        gap: 12px;
+    }
+
+    .sc-icon {
+        width: 44px;
+        height: 44px;
+        font-size: 1.1rem;
+        border-radius: 12px;
+    }
+
+    .sc-value {
+        font-size: 1.1rem;
+    }
+
+    .sc-label {
+        font-size: 0.72rem;
+    }
+
+    /* Balances */
+    .balance-cards {
+        grid-template-columns: 1fr;
+        gap: 14px;
+    }
+
+    .remaining-value {
+        font-size: 1.45rem;
+    }
+
+    /* Forms */
+    .form-card {
+        padding: 18px 14px;
+        border-radius: 14px;
+    }
+
+    .form-grid {
+        grid-template-columns: 1fr;
+        gap: 12px;
+    }
+
+    .form-group input,
+    .form-group select,
+    .filter-input {
+        font-size: 16px !important;
+        min-height: 46px;
+    }
+
+    .btn {
+        width: 100%;
+        justify-content: center;
+        padding: 12px 18px;
+        min-height: 46px;
+        font-size: 0.95rem;
+    }
+
+    .filter-bar {
+        flex-direction: column;
+        align-items: stretch;
+        padding: 14px;
+        gap: 12px;
+    }
+
+    .filter-group {
+        flex-direction: column;
+        align-items: stretch;
+        width: 100%;
+    }
+
+    .filter-group select,
+    .filter-input {
+        width: 100%;
+        min-width: 0;
+    }
+
+    /* Tables on mobile */
+    .table-card {
+        border-radius: 12px;
+        -webkit-overflow-scrolling: touch;
+        position: relative;
+    }
+
+    .data-table th,
+    .data-table td {
+        padding: 10px 12px;
+        font-size: 0.8rem;
+    }
+
+    .best-sellers {
+        grid-template-columns: 1fr 1fr;
+        gap: 12px;
+    }
+
+    .best-seller-card {
+        padding: 14px;
+    }
+
+    .bs-name {
+        font-size: 0.85rem;
+    }
+
+    .bs-count {
+        font-size: 1.15rem;
+    }
+
+    /* Mobile Bottom Navigation Bar */
+    .mobile-bottom-nav {
+        display: flex;
+        position: fixed;
+        bottom: 0;
+        left: 0;
+        right: 0;
+        background: rgba(255, 255, 255, 0.94);
+        backdrop-filter: blur(16px);
+        -webkit-backdrop-filter: blur(16px);
+        border-top: 1px solid rgba(0, 0, 0, 0.08);
+        box-shadow: 0 -4px 25px rgba(0, 0, 0, 0.07);
+        z-index: 990;
+        padding: 5px 2px calc(5px + env(safe-area-inset-bottom, 0px));
+        justify-content: space-around;
+        align-items: center;
+    }
+
+    .mob-nav-item {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        gap: 2px;
+        text-decoration: none;
+        color: var(--text-secondary);
+        font-size: 0.7rem;
+        font-weight: 700;
+        padding: 5px 4px;
+        border-radius: 10px;
+        transition: var(--transition);
+        flex: 1;
+        min-width: 0;
+        text-align: center;
+    }
+
+    .mob-nav-item i {
+        font-size: 1.15rem;
+        transition: var(--transition);
+    }
+
+    .mob-nav-item.active {
+        color: var(--primary);
+    }
+
+    .mob-nav-item.active i {
+        transform: scale(1.15);
+        color: var(--primary);
+    }
+
+    .mob-nav-item span {
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        font-size: 0.68rem;
+    }
+}
+
+@media (max-width: 480px) {
+    .cards-grid {
+        grid-template-columns: 1fr;
+        gap: 10px;
+    }
+
+    .best-sellers {
+        grid-template-columns: 1fr;
+    }
+
+    .date-display span {
+        font-size: 0.75rem;
+    }
+
+    .topbar-brand span {
+        display: none;
+    }
+}
+
+
+/* ===================================================
+   CRITICAL MOBILE APP EXPERIENCE (ZERO-ERROR OVERRIDES)
+   =================================================== */
+a {
+    text-decoration: none;
+    color: inherit;
+}
+
+.mobile-bottom-nav {
+    display: none !important;
+}
+
+.sidebar-backdrop {
+    display: none;
+    position: fixed !important;
+    top: 0 !important;
+    left: 0 !important;
+    right: 0 !important;
+    bottom: 0 !important;
+    width: 100vw !important;
+    height: 100vh !important;
+    background: rgba(15, 23, 42, 0.65) !important;
+    backdrop-filter: blur(4px) !important;
+    -webkit-backdrop-filter: blur(4px) !important;
+    z-index: 9998 !important;
+    opacity: 0;
+    transition: opacity 0.3s ease;
+}
+
+.sidebar-backdrop.show {
+    display: block !important;
+    opacity: 1 !important;
+}
+
+@media (max-width: 768px) {
+    body {
+        padding-bottom: calc(70px + env(safe-area-inset-bottom, 0px)) !important;
+    }
+
+    .main-content {
+        margin-right: 0 !important;
+        width: 100% !important;
+        max-width: 100% !important;
+        padding-bottom: 20px !important;
+    }
+
+    .topbar {
+        position: sticky !important;
+        top: 0 !important;
+        z-index: 100 !important;
+        padding: 10px 14px !important;
+        display: flex !important;
+        justify-content: space-between !important;
+        align-items: center !important;
+        background: #ffffff !important;
+        border-bottom: 1px solid #e2e8f0 !important;
+    }
+
+    .topbar-brand {
+        display: flex !important;
+        align-items: center !important;
+        gap: 8px !important;
+    }
+
+    .topbar-brand span {
+        display: inline-block !important;
+        font-size: 1rem !important;
+        font-weight: 800 !important;
+        color: #8B1A1A !important;
+    }
+
+    .topbar-logo {
+        width: 32px !important;
+        height: 32px !important;
+    }
+
+    .menu-toggle {
+        display: flex !important;
+        align-items: center !important;
+        justify-content: center !important;
+        width: 38px !important;
+        height: 38px !important;
+        border-radius: 8px !important;
+        background: #f1f5f9 !important;
+        border: none !important;
+        font-size: 1.1rem !important;
+        cursor: pointer !important;
+    }
+
+    .date-display {
+        display: none !important;
+    }
+
+    /* Off-canvas Sidebar Drawer */
+    .sidebar {
+        position: fixed !important;
+        top: 0 !important;
+        right: 0 !important;
+        width: 285px !important;
+        max-width: 85vw !important;
+        height: 100vh !important;
+        z-index: 9999 !important;
+        transform: translateX(115%) !important;
+        transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1) !important;
+        box-shadow: -8px 0 30px rgba(0, 0, 0, 0.35) !important;
+        background: #1A1A2E !important;
+        overflow-y: auto !important;
+    }
+
+    .sidebar.open {
+        transform: translateX(0) !important;
+    }
+
+    .sidebar-close {
+        display: flex !important;
+        position: absolute !important;
+        top: 14px !important;
+        left: 14px !important;
+        width: 36px !important;
+        height: 36px !important;
+        border-radius: 50% !important;
+        background: rgba(255, 255, 255, 0.15) !important;
+        border: none !important;
+        color: #ffffff !important;
+        font-size: 1.1rem !important;
+        align-items: center !important;
+        justify-content: center !important;
+        cursor: pointer !important;
+        z-index: 10 !important;
+    }
+
+    /* Fixed Bottom Navigation Bar */
+    .mobile-bottom-nav {
+        display: flex !important;
+        position: fixed !important;
+        bottom: 0 !important;
+        left: 0 !important;
+        right: 0 !important;
+        width: 100% !important;
+        height: 60px !important;
+        background: #ffffff !important;
+        border-top: 1px solid #e2e8f0 !important;
+        box-shadow: 0 -3px 15px rgba(0, 0, 0, 0.08) !important;
+        z-index: 9990 !important;
+        justify-content: space-around !important;
+        align-items: center !important;
+        padding: 4px 4px calc(4px + env(safe-area-inset-bottom, 0px)) !important;
+    }
+
+    .mob-nav-item {
+        display: flex !important;
+        flex-direction: column !important;
+        align-items: center !important;
+        justify-content: center !important;
+        text-decoration: none !important;
+        color: #64748b !important;
+        font-size: 0.72rem !important;
+        font-weight: 700 !important;
+        padding: 4px 6px !important;
+        border-radius: 8px !important;
+        flex: 1 !important;
+        text-align: center !important;
+        transition: all 0.2s ease !important;
+    }
+
+    .mob-nav-item i {
+        font-size: 1.15rem !important;
+        margin-bottom: 2px !important;
+        color: #64748b !important;
+        transition: all 0.2s ease !important;
+    }
+
+    .mob-nav-item.active {
+        color: #8B1A1A !important;
+    }
+
+    .mob-nav-item.active i {
+        color: #8B1A1A !important;
+        transform: scale(1.15) !important;
+    }
+
+    .mob-nav-item span {
+        font-size: 0.68rem !important;
+        white-space: nowrap !important;
+    }
+
+    /* Cards, Forms, and Content on Mobile */
+    .page {
+        padding: 14px 10px !important;
+    }
+
+    .page-title {
+        font-size: 1.25rem !important;
+        margin-bottom: 16px !important;
+    }
+
+    .cards-grid {
+        grid-template-columns: 1fr 1fr !important;
+        gap: 10px !important;
+    }
+
+    .summary-card {
+        padding: 14px 12px !important;
+        border-radius: 12px !important;
+        gap: 10px !important;
+    }
+
+    .sc-icon {
+        width: 40px !important;
+        height: 40px !important;
+        font-size: 1rem !important;
+        border-radius: 10px !important;
+    }
+
+    .sc-value {
+        font-size: 1.05rem !important;
+    }
+
+    .sc-label {
+        font-size: 0.7rem !important;
+    }
+
+    .balance-cards {
+        grid-template-columns: 1fr !important;
+        gap: 12px !important;
+    }
+
+    .balance-card {
+        padding: 16px !important;
+    }
+
+    .remaining-value {
+        font-size: 1.4rem !important;
+    }
+
+    .form-card {
+        padding: 16px 12px !important;
+        border-radius: 14px !important;
+        margin-bottom: 16px !important;
+    }
+
+    .form-grid {
+        grid-template-columns: 1fr !important;
+        gap: 10px !important;
+    }
+
+    .form-group input,
+    .form-group select,
+    .filter-input {
+        font-size: 16px !important;
+        min-height: 46px !important;
+        border-radius: 10px !important;
+    }
+
+    .btn {
+        width: 100% !important;
+        justify-content: center !important;
+        min-height: 46px !important;
+        font-size: 0.95rem !important;
+        border-radius: 10px !important;
+    }
+
+    .table-card {
+        border-radius: 12px !important;
+        overflow-x: auto !important;
+        -webkit-overflow-scrolling: touch !important;
+    }
+
+    .data-table {
+        min-width: 580px !important;
+    }
+
+    .data-table th,
+    .data-table td {
+        padding: 9px 10px !important;
+        font-size: 0.8rem !important;
+    }
+}
+
+</style>
+</head>
+<body>
+    <!-- Sidebar -->
+    <aside class="sidebar" id="sidebar">
+        <button class="sidebar-close" id="sidebarClose" aria-label="إغلاق القائمة">
+            <i class="fas fa-times"></i>
+        </button>
+        <div class="sidebar-header">
+            <div class="logo-wrapper">
+                <img src="logo.jpg" alt="BRADA Logo" class="logo-img">
+            </div>
+            <div class="brand-name">Brada Perfume</div>
+            <div class="brand-sub">لوحة تحكم الإعلانات والمبيعات</div>
+        </div>
+        <nav class="sidebar-nav">
+            <a href="#" class="nav-item active" data-page="dashboard">
+                <i class="fas fa-th-large"></i>
+                <span>الرئيسية</span>
+            </a>
+            <a href="#" class="nav-item" data-page="expenses">
+                <i class="fas fa-money-bill-wave"></i>
+                <span>المصروفات</span>
+            </a>
+            <a href="#" class="nav-item" data-page="repayments">
+                <i class="fas fa-hand-holding-usd"></i>
+                <span>سداد المصروفات</span>
+            </a>
+            <a href="#" class="nav-item" data-page="sales">
+                <i class="fas fa-shopping-cart"></i>
+                <span>المبيعات</span>
+            </a>
+            <a href="#" class="nav-item" data-page="products">
+                <i class="fas fa-box"></i>
+                <span>المنتجات</span>
+            </a>
+            <a href="#" class="nav-item" data-page="customers">
+                <i class="fas fa-users"></i>
+                <span>العملاء</span>
+            </a>
+            <a href="#" class="nav-item" data-page="profits">
+                <i class="fas fa-coins"></i>
+                <span>الأرباح</span>
+            </a>
+            <a href="#" class="nav-item" data-page="reports">
+                <i class="fas fa-chart-bar"></i>
+                <span>التقارير</span>
+            </a>
+        </nav>
+        <div class="sidebar-footer">
+            <small>© 2026 Brada Perfume</small>
+        </div>
+    </aside>
+
+    <!-- Mobile Sidebar Backdrop Overlay -->
+    <div class="sidebar-backdrop" id="sidebarBackdrop"></div>
+
+    <!-- Main Content -->
+    <main class="main-content">
+        <!-- Top Bar -->
+        <header class="topbar">
+            <button class="menu-toggle" id="menuToggle">
+                <i class="fas fa-bars"></i>
+            </button>
+            <div class="topbar-brand">
+                <img src="logo.jpg" alt="BRADA" class="topbar-logo">
+                <span>Brada Perfume</span>
+            </div>
+            <div class="topbar-right">
+                <div class="date-display">
+                    <i class="fas fa-calendar-alt"></i>
+                    <span id="currentDate"></span>
+                </div>
+            </div>
+        </header>
+
+        <!-- ==================== DASHBOARD PAGE ==================== -->
+        <section class="page active" id="page-dashboard">
+            <div class="page-header">
+                <h1 class="page-title"><i class="fas fa-th-large"></i> نظرة عامة</h1>
+            </div>
+            
+            <div class="cards-grid">
+                <div class="summary-card gradient-blue">
+                    <div class="sc-icon"><i class="fas fa-money-bill-wave"></i></div>
+                    <div class="sc-info">
+                        <span class="sc-value" id="totalExpenses">٠٫٠٠ ج.م</span>
+                        <span class="sc-label">إجمالي المصروفات</span>
+                    </div>
+                    <div class="sc-decoration"></div>
+                </div>
+                <div class="summary-card gradient-green">
+                    <div class="sc-icon"><i class="fas fa-shopping-cart"></i></div>
+                    <div class="sc-info">
+                        <span class="sc-value" id="totalSales">٠٫٠٠ ج.م</span>
+                        <span class="sc-label">إجمالي المبيعات</span>
+                    </div>
+                    <div class="sc-decoration"></div>
+                </div>
+                <div class="summary-card gradient-purple">
+                    <div class="sc-icon"><i class="fas fa-coins"></i></div>
+                    <div class="sc-info">
+                        <span class="sc-value" id="totalProfits">٠٫٠٠ ج.م</span>
+                        <span class="sc-label">صافي الأرباح</span>
+                    </div>
+                    <div class="sc-decoration"></div>
+                </div>
+                <div class="summary-card gradient-orange">
+                    <div class="sc-icon"><i class="fas fa-calendar-day"></i></div>
+                    <div class="sc-info">
+                        <span class="sc-value" id="todayExpenses">٠٫٠٠ ج.م</span>
+                        <span class="sc-label">مصروفات اليوم</span>
+                    </div>
+                    <div class="sc-decoration"></div>
+                </div>
+            </div>
+
+            <!-- Balances Section -->
+            <div class="section-header">
+                <h2><i class="fas fa-balance-scale"></i> أرصدة المصروفات المتبقية</h2>
+            </div>
+            <div class="balance-cards">
+                <div class="balance-card owner-balance">
+                    <div class="bal-header">
+                        <div class="bal-avatar"><i class="fas fa-user-tie"></i></div>
+                        <div class="bal-name">صاحب المشروع</div>
+                    </div>
+                    <div class="bal-body">
+                        <div class="bal-row"><span>إجمالي المصروفات:</span><span id="dash_ownerTotal" class="red">٠٫٠٠</span></div>
+                        <div class="bal-row"><span>إجمالي السداد:</span><span id="dash_ownerPaid" class="green">٠٫٠٠</span></div>
+                        <div class="bal-divider"></div>
+                        <div class="bal-row bal-remaining"><span>المتبقي:</span><span id="dash_ownerRemaining" class="bold">٠٫٠٠ ج.م</span></div>
+                    </div>
+                </div>
+                <div class="balance-card amr-balance">
+                    <div class="bal-header">
+                        <div class="bal-avatar"><i class="fas fa-user"></i></div>
+                        <div class="bal-name">عمرو</div>
+                    </div>
+                    <div class="bal-body">
+                        <div class="bal-row"><span>إجمالي المصروفات:</span><span id="dash_amrTotal" class="red">٠٫٠٠</span></div>
+                        <div class="bal-row"><span>إجمالي السداد:</span><span id="dash_amrPaid" class="green">٠٫٠٠</span></div>
+                        <div class="bal-divider"></div>
+                        <div class="bal-row bal-remaining"><span>المتبقي:</span><span id="dash_amrRemaining" class="bold">٠٫٠٠ ج.م</span></div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Best Selling -->
+            <div class="section-header">
+                <h2><i class="fas fa-trophy"></i> المنتجات الأكثر مبيعاً</h2>
+            </div>
+            <div class="best-sellers" id="bestSellers">
+                <div class="empty-state"><i class="fas fa-medal"></i><p>لا توجد مبيعات بعد</p></div>
+            </div>
+
+            <!-- Charts -->
+            <div class="charts-grid">
+                <div class="chart-box">
+                    <h3><i class="fas fa-chart-bar"></i> المصروفات vs المبيعات (آخر 7 أيام)</h3>
+                    <canvas id="weeklyChart"></canvas>
+                </div>
+                <div class="chart-box">
+                    <h3><i class="fas fa-chart-pie"></i> توزيع المصروفات بالتصنيف</h3>
+                    <canvas id="expensesPieChart"></canvas>
+                </div>
+            </div>
+
+            <!-- Recent -->
+            <div class="section-header">
+                <h2><i class="fas fa-clock"></i> آخر العمليات</h2>
+            </div>
+            <div class="table-card">
+                <table class="data-table">
+                    <thead><tr><th>التاريخ</th><th>النوع</th><th>الوصف</th><th>المبلغ</th><th>المصدر</th></tr></thead>
+                    <tbody id="recentTransactions"></tbody>
+                </table>
+            </div>
+        </section>
+
+        <!-- ==================== EXPENSES PAGE ==================== -->
+        <section class="page" id="page-expenses">
+            <div class="page-header">
+                <h1 class="page-title"><i class="fas fa-money-bill-wave"></i> إدارة المصروفات</h1>
+            </div>
+            
+            <div class="form-card">
+                <h2 class="form-title"><i class="fas fa-plus-circle"></i> إضافة مصروف جديد</h2>
+                <form id="expenseForm">
+                    <div class="form-grid">
+                        <div class="form-group">
+                            <label><i class="fas fa-pen"></i> وصف المصروف</label>
+                            <input type="text" id="expenseDesc" placeholder="مثال: إعلان فيسبوك - كامبين عطر X" required>
+                        </div>
+                        <div class="form-group">
+                            <label><i class="fas fa-coins"></i> المبلغ (ج.م)</label>
+                            <input type="number" id="expenseAmount" placeholder="0.00" step="0.01" required>
+                        </div>
+                        <div class="form-group">
+                            <label><i class="fas fa-calendar"></i> التاريخ</label>
+                            <input type="date" id="expenseDate" required>
+                        </div>
+                        <div class="form-group">
+                            <label><i class="fas fa-clock"></i> النوع</label>
+                            <select id="expenseType" required>
+                                <option value="daily">يومي</option>
+                                <option value="monthly">شهري</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label><i class="fas fa-user"></i> المصدر (مين دفع؟)</label>
+                            <select id="expenseSource" required>
+                                <option value="owner">صاحب المشروع</option>
+                                <option value="amr">عمرو</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label><i class="fas fa-tag"></i> التصنيف</label>
+                            <select id="expenseCategory" required>
+                                <option value="facebook_ads">إعلانات فيسبوك</option>
+                                <option value="google_ads">إعلانات جوجل</option>
+                                <option value="tiktok_ads">إعلانات تيك توك</option>
+                                <option value="instagram_ads">إعلانات انستجرام</option>
+                                <option value="snapchat_ads">إعلانات سناب شات</option>
+                                <option value="shipping">شحن</option>
+                                <option value="packaging">تغليف</option>
+                                <option value="design">تصميم</option>
+                                <option value="other">أخرى</option>
+                            </select>
+                        </div>
+                    </div>
+                    <button type="submit" class="btn btn-primary"><i class="fas fa-plus"></i> إضافة المصروف</button>
+                </form>
+            </div>
+
+            <div class="filter-bar">
+                <div class="filter-group">
+                    <label>المصدر:</label>
+                    <select id="filterExpenseSource">
+                        <option value="all">الكل</option>
+                        <option value="owner">صاحب المشروع</option>
+                        <option value="amr">عمرو</option>
+                    </select>
+                </div>
+                <div class="filter-group">
+                    <label>النوع:</label>
+                    <select id="filterExpenseType">
+                        <option value="all">الكل</option>
+                        <option value="daily">يومي</option>
+                        <option value="monthly">شهري</option>
+                    </select>
+                </div>
+                <div class="filter-group">
+                    <label>التصنيف:</label>
+                    <select id="filterExpenseCategory">
+                        <option value="all">الكل</option>
+                        <option value="facebook_ads">فيسبوك</option>
+                        <option value="google_ads">جوجل</option>
+                        <option value="tiktok_ads">تيك توك</option>
+                        <option value="instagram_ads">انستجرام</option>
+                        <option value="shipping">شحن</option>
+                        <option value="packaging">تغليف</option>
+                        <option value="other">أخرى</option>
+                    </select>
+                </div>
+            </div>
+
+            <div class="table-card">
+                <table class="data-table">
+                    <thead><tr><th>التاريخ</th><th>الوصف</th><th>المبلغ</th><th>النوع</th><th>المصدر</th><th>التصنيف</th><th>إجراءات</th></tr></thead>
+                    <tbody id="expensesTable"></tbody>
+                </table>
+            </div>
+        </section>
+
+        <!-- ==================== REPAYMENTS PAGE ==================== -->
+        <section class="page" id="page-repayments">
+            <div class="page-header">
+                <h1 class="page-title"><i class="fas fa-hand-holding-usd"></i> سداد المصروفات</h1>
+            </div>
+
+            <!-- Current Balances -->
+            <div class="balance-cards large-balance">
+                <div class="balance-card owner-balance">
+                    <div class="bal-header">
+                        <div class="bal-avatar large"><i class="fas fa-user-tie"></i></div>
+                        <div>
+                            <div class="bal-name">صاحب المشروع</div>
+                            <div class="bal-subtitle">الرصيد المتبقي عليه</div>
+                        </div>
+                    </div>
+                    <div class="bal-body">
+                        <div class="bal-row"><span>إجمالي المصروفات:</span><span id="rep_ownerTotal" class="red">٠٫٠٠ ج.م</span></div>
+                        <div class="bal-row"><span>تم السداد:</span><span id="rep_ownerPaid" class="green">٠٫٠٠ ج.م</span></div>
+                        <div class="bal-divider"></div>
+                        <div class="bal-big-remaining">
+                            <span>المتبقي</span>
+                            <span id="rep_ownerRemaining" class="remaining-value">٠٫٠٠ ج.م</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="balance-card amr-balance">
+                    <div class="bal-header">
+                        <div class="bal-avatar large"><i class="fas fa-user"></i></div>
+                        <div>
+                            <div class="bal-name">عمرو</div>
+                            <div class="bal-subtitle">الرصيد المتبقي عليه</div>
+                        </div>
+                    </div>
+                    <div class="bal-body">
+                        <div class="bal-row"><span>إجمالي المصروفات:</span><span id="rep_amrTotal" class="red">٠٫٠٠ ج.م</span></div>
+                        <div class="bal-row"><span>تم السداد:</span><span id="rep_amrPaid" class="green">٠٫٠٠ ج.م</span></div>
+                        <div class="bal-divider"></div>
+                        <div class="bal-big-remaining">
+                            <span>المتبقي</span>
+                            <span id="rep_amrRemaining" class="remaining-value">٠٫٠٠ ج.م</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="form-card">
+                <h2 class="form-title"><i class="fas fa-plus-circle"></i> تسجيل سداد</h2>
+                <form id="repaymentForm">
+                    <div class="form-grid">
+                        <div class="form-group">
+                            <label><i class="fas fa-user"></i> السداد لمين؟</label>
+                            <select id="repayTo" required>
+                                <option value="owner">صاحب المشروع</option>
+                                <option value="amr">عمرو</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label><i class="fas fa-coins"></i> مبلغ السداد (ج.م)</label>
+                            <input type="number" id="repayAmount" placeholder="0.00" step="0.01" required>
+                        </div>
+                        <div class="form-group">
+                            <label><i class="fas fa-calendar"></i> التاريخ</label>
+                            <input type="date" id="repayDate" required>
+                        </div>
+                        <div class="form-group">
+                            <label><i class="fas fa-pen"></i> ملاحظات</label>
+                            <input type="text" id="repayNotes" placeholder="ملاحظات على السداد">
+                        </div>
+                    </div>
+                    <button type="submit" class="btn btn-success"><i class="fas fa-check-circle"></i> تسجيل السداد</button>
+                </form>
+            </div>
+
+            <div class="section-header"><h2><i class="fas fa-history"></i> سجل السداد</h2></div>
+            <div class="table-card">
+                <table class="data-table">
+                    <thead><tr><th>التاريخ</th><th>السداد إلى</th><th>المبلغ</th><th>ملاحظات</th><th>إجراءات</th></tr></thead>
+                    <tbody id="repaymentsTable"></tbody>
+                </table>
+            </div>
+        </section>
+
+        <!-- ==================== SALES PAGE ==================== -->
+        <section class="page" id="page-sales">
+            <div class="page-header">
+                <h1 class="page-title"><i class="fas fa-shopping-cart"></i> إدارة المبيعات</h1>
+            </div>
+            
+            <div class="form-card">
+                <h2 class="form-title"><i class="fas fa-plus-circle"></i> إضافة عملية بيع جديدة</h2>
+                <form id="salesForm">
+                    <div class="form-grid">
+                        <div class="form-group">
+                            <label><i class="fas fa-box"></i> المنتج</label>
+                            <select id="saleProduct" required>
+                                <option value="">اختر المنتج</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label><i class="fas fa-sort-numeric-up"></i> الكمية</label>
+                            <input type="number" id="saleQuantity" placeholder="1" min="1" value="1" required>
+                        </div>
+                        <div class="form-group">
+                            <label><i class="fas fa-tag"></i> سعر البيع للقطعة (ج.م)</label>
+                            <input type="number" id="salePrice" placeholder="0.00" step="0.01" required>
+                        </div>
+                        <div class="form-group">
+                            <label><i class="fas fa-calendar"></i> التاريخ</label>
+                            <input type="date" id="saleDate" required>
+                        </div>
+                    </div>
+                    <div class="form-section-title"><i class="fas fa-user-circle"></i> بيانات العميل</div>
+                    <div class="form-grid">
+                        <div class="form-group full-width">
+                            <label><i class="fas fa-address-book"></i> اختيار عميل مسجل مسبقاً (اختياري)</label>
+                            <select id="saleCustomerSelect">
+                                <option value="">-- عميل جديد (اكتب بياناته بالأسفل) --</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label><i class="fas fa-user"></i> اسم العميل</label>
+                            <input type="text" id="saleCustomerName" placeholder="الاسم الكامل" required>
+                        </div>
+                        <div class="form-group">
+                            <label><i class="fas fa-phone"></i> رقم الموبايل</label>
+                            <input type="tel" id="saleCustomerPhone" placeholder="01xxxxxxxxx" required>
+                        </div>
+                        <div class="form-group">
+                            <label><i class="fas fa-map-marker-alt"></i> العنوان</label>
+                            <input type="text" id="saleCustomerAddress" placeholder="العنوان بالتفصيل">
+                        </div>
+                        <div class="form-group">
+                            <label><i class="fas fa-city"></i> المحافظة</label>
+                            <select id="saleCustomerCity">
+                                <option value="">اختر المحافظة</option>
+                                <option value="القاهرة">القاهرة</option>
+                                <option value="الجيزة">الجيزة</option>
+                                <option value="الإسكندرية">الإسكندرية</option>
+                                <option value="الدقهلية">الدقهلية</option>
+                                <option value="الشرقية">الشرقية</option>
+                                <option value="المنوفية">المنوفية</option>
+                                <option value="الغربية">الغربية</option>
+                                <option value="القليوبية">القليوبية</option>
+                                <option value="البحيرة">البحيرة</option>
+                                <option value="كفر الشيخ">كفر الشيخ</option>
+                                <option value="المنيا">المنيا</option>
+                                <option value="أسيوط">أسيوط</option>
+                                <option value="سوهاج">سوهاج</option>
+                                <option value="قنا">قنا</option>
+                                <option value="الأقصر">الأقصر</option>
+                                <option value="أسوان">أسوان</option>
+                                <option value="الفيوم">الفيوم</option>
+                                <option value="بني سويف">بني سويف</option>
+                                <option value="بورسعيد">بورسعيد</option>
+                                <option value="الإسماعيلية">الإسماعيلية</option>
+                                <option value="السويس">السويس</option>
+                                <option value="دمياط">دمياط</option>
+                                <option value="شمال سيناء">شمال سيناء</option>
+                                <option value="جنوب سيناء">جنوب سيناء</option>
+                                <option value="البحر الأحمر">البحر الأحمر</option>
+                                <option value="الوادي الجديد">الوادي الجديد</option>
+                                <option value="مطروح">مطروح</option>
+                            </select>
+                        </div>
+                        <div class="form-group full-width">
+                            <label><i class="fas fa-sticky-note"></i> ملاحظات</label>
+                            <input type="text" id="saleNotes" placeholder="أي ملاحظات إضافية على الطلب">
+                        </div>
+                    </div>
+                    <button type="submit" class="btn btn-success"><i class="fas fa-plus"></i> تسجيل البيع</button>
+                </form>
+            </div>
+
+            <!-- Best Selling Products -->
+            <div class="section-header">
+                <h2><i class="fas fa-fire"></i> المنتجات الأكثر مبيعاً</h2>
+            </div>
+            <div class="best-sellers" id="salesBestSellers"></div>
+
+            <div class="section-header"><h2><i class="fas fa-list"></i> سجل المبيعات</h2></div>
+            <div class="table-card">
+                <table class="data-table">
+                    <thead><tr>
+                        <th>التاريخ</th><th>المنتج</th><th>الكمية</th><th>سعر القطعة</th><th>الإجمالي</th>
+                        <th>العميل</th><th>الموبايل</th><th>المحافظة</th><th>إجراءات</th>
+                    </tr></thead>
+                    <tbody id="salesTable"></tbody>
+                </table>
+            </div>
+        </section>
+
+        <!-- ==================== PRODUCTS PAGE ==================== -->
+        <section class="page" id="page-products">
+            <div class="page-header">
+                <h1 class="page-title"><i class="fas fa-box"></i> إدارة المنتجات</h1>
+            </div>
+            
+            <div class="form-card">
+                <h2 class="form-title"><i class="fas fa-plus-circle"></i> إضافة منتج جديد</h2>
+                <form id="productForm">
+                    <div class="form-grid">
+                        <div class="form-group">
+                            <label><i class="fas fa-pen"></i> اسم المنتج</label>
+                            <input type="text" id="productName" placeholder="مثال: عطر BRADA Classic" required>
+                        </div>
+                        <div class="form-group">
+                            <label><i class="fas fa-dollar-sign"></i> تكلفة المنتج (ج.م)</label>
+                            <input type="number" id="productCost" placeholder="0.00" step="0.01" required>
+                        </div>
+                        <div class="form-group">
+                            <label><i class="fas fa-tag"></i> سعر البيع (ج.م)</label>
+                            <input type="number" id="productPrice" placeholder="0.00" step="0.01" required>
+                        </div>
+                        <div class="form-group">
+                            <label><i class="fas fa-warehouse"></i> الكمية المتاحة</label>
+                            <input type="number" id="productStock" placeholder="0" min="0" required>
+                        </div>
+                    </div>
+                    <button type="submit" class="btn btn-primary"><i class="fas fa-plus"></i> إضافة المنتج</button>
+                </form>
+            </div>
+
+            <div class="table-card">
+                <table class="data-table">
+                    <thead><tr><th>المنتج</th><th>التكلفة</th><th>سعر البيع</th><th>هامش الربح</th><th>نسبة الربح</th><th>المتاح</th><th>المباع</th><th>إجراءات</th></tr></thead>
+                    <tbody id="productsTable"></tbody>
+                </table>
+            </div>
+        </section>
+
+        <!-- ==================== CUSTOMERS PAGE ==================== -->
+        <section class="page" id="page-customers">
+            <div class="page-header">
+                <h1 class="page-title"><i class="fas fa-users"></i> إدارة وسجل العملاء</h1>
+            </div>
+
+            <!-- Add Customer Form -->
+            <div class="form-card">
+                <h2 class="form-title"><i class="fas fa-user-plus"></i> إضافة عميل جديد</h2>
+                <form id="customerForm">
+                    <div class="form-grid">
+                        <div class="form-group">
+                            <label><i class="fas fa-user"></i> اسم العميل</label>
+                            <input type="text" id="custName" placeholder="الاسم الكامل للعميل" required>
+                        </div>
+                        <div class="form-group">
+                            <label><i class="fas fa-phone"></i> رقم الموبايل</label>
+                            <input type="tel" id="custPhone" placeholder="01xxxxxxxxx" required>
+                        </div>
+                        <div class="form-group">
+                            <label><i class="fas fa-city"></i> المحافظة</label>
+                            <select id="custCity">
+                                <option value="">اختر المحافظة</option>
+                                <option value="القاهرة">القاهرة</option>
+                                <option value="الجيزة">الجيزة</option>
+                                <option value="الإسكندرية">الإسكندرية</option>
+                                <option value="الدقهلية">الدقهلية</option>
+                                <option value="الشرقية">الشرقية</option>
+                                <option value="المنوفية">المنوفية</option>
+                                <option value="الغربية">الغربية</option>
+                                <option value="القليوبية">القليوبية</option>
+                                <option value="البحيرة">البحيرة</option>
+                                <option value="كفر الشيخ">كفر الشيخ</option>
+                                <option value="المنيا">المنيا</option>
+                                <option value="أسيوط">أسيوط</option>
+                                <option value="سوهاج">سوهاج</option>
+                                <option value="قنا">قنا</option>
+                                <option value="الأقصر">الأقصر</option>
+                                <option value="أسوان">أسوان</option>
+                                <option value="الفيوم">الفيوم</option>
+                                <option value="بني سويف">بني سويف</option>
+                                <option value="بورسعيد">بورسعيد</option>
+                                <option value="الإسماعيلية">الإسماعيلية</option>
+                                <option value="السويس">السويس</option>
+                                <option value="دمياط">دمياط</option>
+                                <option value="شمال سيناء">شمال سيناء</option>
+                                <option value="جنوب سيناء">جنوب سيناء</option>
+                                <option value="البحر الأحمر">البحر الأحمر</option>
+                                <option value="الوادي الجديد">الوادي الجديد</option>
+                                <option value="مطروح">مطروح</option>
+                            </select>
+                        </div>
+                        <div class="form-group full-width">
+                            <label><i class="fas fa-map-marker-alt"></i> العنوان بالتفصيل</label>
+                            <input type="text" id="custAddress" placeholder="المنطقة، الشارع، رقم العمارة/الشقة">
+                        </div>
+                        <div class="form-group full-width">
+                            <label><i class="fas fa-sticky-note"></i> ملاحظات</label>
+                            <input type="text" id="custNotes" placeholder="تفضيلات العطور، أوقات الاستلام المناسبة، إلخ">
+                        </div>
+                    </div>
+                    <button type="submit" class="btn btn-primary"><i class="fas fa-user-plus"></i> إضافة العميل</button>
+                </form>
+            </div>
+            
+            <div class="filter-bar">
+                <div class="filter-group">
+                    <label>بحث:</label>
+                    <input type="text" id="customerSearch" placeholder="ابحث بالاسم أو الموبايل..." class="filter-input">
+                </div>
+            </div>
+
+            <div class="table-card">
+                <table class="data-table">
+                    <thead><tr>
+                        <th>العميل</th><th>الموبايل</th><th>المحافظة</th><th>العنوان</th>
+                        <th>عدد الطلبات</th><th>إجمالي المشتريات</th><th>آخر طلب</th><th>المنتجات</th><th>إجراءات</th>
+                    </tr></thead>
+                    <tbody id="customersTable"></tbody>
+                </table>
+            </div>
+        </section>
+
+        <!-- ==================== PROFITS PAGE ==================== -->
+        <section class="page" id="page-profits">
+            <div class="page-header">
+                <h1 class="page-title"><i class="fas fa-coins"></i> تحليل الأرباح</h1>
+            </div>
+            
+            <div class="profit-overview">
+                <div class="po-card po-sales"><div class="po-icon"><i class="fas fa-shopping-cart"></i></div><div><span class="po-label">إجمالي المبيعات</span><span class="po-value" id="profitTotalSales">٠٫٠٠</span></div></div>
+                <div class="po-card po-cost"><div class="po-icon"><i class="fas fa-box"></i></div><div><span class="po-label">تكلفة المنتجات</span><span class="po-value" id="profitTotalCost">٠٫٠٠</span></div></div>
+                <div class="po-card po-ads"><div class="po-icon"><i class="fas fa-ad"></i></div><div><span class="po-label">مصروفات الإعلانات</span><span class="po-value" id="profitTotalAds">٠٫٠٠</span></div></div>
+                <div class="po-card po-net"><div class="po-icon"><i class="fas fa-coins"></i></div><div><span class="po-label">صافي الربح</span><span class="po-value" id="profitNet">٠٫٠٠</span></div></div>
+            </div>
+
+            <div class="section-header"><h2><i class="fas fa-balance-scale"></i> تقسيم المصروفات والأرصدة</h2></div>
+            <div class="profit-breakdown">
+                <div class="pb-card">
+                    <h3><i class="fas fa-user-tie"></i> صاحب المشروع</h3>
+                    <div class="pb-rows">
+                        <div class="pb-row"><span>المصروفات</span><span id="p_ownerExp" class="red">٠٫٠٠</span></div>
+                        <div class="pb-row"><span>تم السداد</span><span id="p_ownerPaid" class="green">٠٫٠٠</span></div>
+                        <div class="pb-row highlight-row"><span>المتبقي</span><span id="p_ownerRem">٠٫٠٠</span></div>
+                        <div class="pb-row"><span>النسبة من الإجمالي</span><span id="p_ownerPct">0%</span></div>
+                    </div>
+                </div>
+                <div class="pb-card">
+                    <h3><i class="fas fa-user"></i> عمرو</h3>
+                    <div class="pb-rows">
+                        <div class="pb-row"><span>المصروفات</span><span id="p_amrExp" class="red">٠٫٠٠</span></div>
+                        <div class="pb-row"><span>تم السداد</span><span id="p_amrPaid" class="green">٠٫٠٠</span></div>
+                        <div class="pb-row highlight-row"><span>المتبقي</span><span id="p_amrRem">٠٫٠٠</span></div>
+                        <div class="pb-row"><span>النسبة من الإجمالي</span><span id="p_amrPct">0%</span></div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="charts-grid">
+                <div class="chart-box"><h3><i class="fas fa-chart-line"></i> الأرباح الشهرية</h3><canvas id="monthlyProfitChart"></canvas></div>
+                <div class="chart-box"><h3><i class="fas fa-chart-pie"></i> تقسيم المصروفات</h3><canvas id="sourceChart"></canvas></div>
+            </div>
+        </section>
+
+        <!-- ==================== REPORTS PAGE ==================== -->
+        <section class="page" id="page-reports">
+            <div class="page-header">
+                <h1 class="page-title"><i class="fas fa-chart-bar"></i> التقارير</h1>
+            </div>
+            
+            <div class="form-card">
+                <div class="form-grid">
+                    <div class="form-group">
+                        <label><i class="fas fa-calendar"></i> من تاريخ</label>
+                        <input type="date" id="reportFrom">
+                    </div>
+                    <div class="form-group">
+                        <label><i class="fas fa-calendar"></i> إلى تاريخ</label>
+                        <input type="date" id="reportTo">
+                    </div>
+                    <div class="form-group" style="align-self:end">
+                        <button type="button" class="btn btn-primary" onclick="generateReport()"><i class="fas fa-search"></i> عرض التقرير</button>
+                    </div>
+                    <div class="form-group" style="align-self:end">
+                        <button type="button" class="btn btn-export" onclick="exportCSV()"><i class="fas fa-file-csv"></i> تصدير CSV</button>
+                    </div>
+                </div>
+            </div>
+
+            <div id="reportContent">
+                <div class="report-grid" id="reportSummary"></div>
+                <div class="section-header"><h2>تفاصيل المصروفات</h2></div>
+                <div class="table-card">
+                    <table class="data-table"><thead><tr><th>التاريخ</th><th>الوصف</th><th>المبلغ</th><th>المصدر</th><th>التصنيف</th></tr></thead>
+                    <tbody id="reportExpenses"></tbody></table>
+                </div>
+                <div class="section-header"><h2>تفاصيل المبيعات</h2></div>
+                <div class="table-card">
+                    <table class="data-table"><thead><tr><th>التاريخ</th><th>المنتج</th><th>العميل</th><th>الكمية</th><th>الإجمالي</th></tr></thead>
+                    <tbody id="reportSales"></tbody></table>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- Mobile Bottom Navigation Bar -->
+    <nav class="mobile-bottom-nav" id="mobileBottomNav">
+        <a href="#" class="mob-nav-item active" data-page="dashboard">
+            <i class="fas fa-th-large"></i>
+            <span>الرئيسية</span>
+        </a>
+        <a href="#" class="mob-nav-item" data-page="expenses">
+            <i class="fas fa-money-bill-wave"></i>
+            <span>المصروفات</span>
+        </a>
+        <a href="#" class="mob-nav-item" data-page="sales">
+            <i class="fas fa-shopping-cart"></i>
+            <span>المبيعات</span>
+        </a>
+        <a href="#" class="mob-nav-item" data-page="customers">
+            <i class="fas fa-users"></i>
+            <span>العملاء</span>
+        </a>
+        <a href="#" class="mob-nav-item" data-page="profits">
+            <i class="fas fa-coins"></i>
+            <span>الأرباح</span>
+        </a>
+        <a href="#" class="mob-nav-item" id="mobMenuToggle">
+            <i class="fas fa-bars"></i>
+            <span>المزيد</span>
+        </a>
+    </nav>
+
+    <!-- Toast -->
+    <div class="toast" id="toast"><i class="fas fa-check-circle"></i><span id="toastMessage"></span></div>
+
+    <!-- Delete Modal -->
+    <div class="modal-overlay" id="deleteModal">
+        <div class="modal">
+            <div class="modal-icon"><i class="fas fa-exclamation-triangle"></i></div>
+            <h3>تأكيد الحذف</h3>
+            <p>هل أنت متأكد من حذف هذا العنصر؟</p>
+            <div class="modal-actions">
+                <button class="btn btn-danger" id="confirmDelete">حذف</button>
+                <button class="btn btn-secondary" onclick="closeModal()">إلغاء</button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+/* ============================================
+   BRADA PERFUME - Dashboard Application
+   ============================================ */
+
+// ==========================================
+// DATA STORE
+// ==========================================
+const Store = {
+    get(key) {
+        try { return JSON.parse(localStorage.getItem('brada_' + key)) || []; }
+        catch { return []; }
+    },
+    set(key, data) {
+        localStorage.setItem('brada_' + key, JSON.stringify(data));
+    },
+    id() {
+        return Date.now().toString(36) + Math.random().toString(36).substr(2, 6);
+    }
+};
+
+// ==========================================
+// CONSTANTS
+// ==========================================
+const CATEGORIES = {
+    facebook_ads: 'إعلانات فيسبوك',
+    google_ads: 'إعلانات جوجل',
+    tiktok_ads: 'إعلانات تيك توك',
+    instagram_ads: 'إعلانات انستجرام',
+    snapchat_ads: 'إعلانات سناب شات',
+    shipping: 'شحن',
+    packaging: 'تغليف',
+    design: 'تصميم',
+    other: 'أخرى'
+};
+
+const SOURCES = { owner: 'صاحب المشروع', amr: 'عمرو' };
+const TYPES = { daily: 'يومي', monthly: 'شهري' };
+
+// ==========================================
+// INIT
+// ==========================================
+document.addEventListener('DOMContentLoaded', initApp);
+
+function initApp() {
+    setCurrentDate();
+    setDefaultDates();
+    setupNavigation();
+    setupForms();
+    setupFilters();
+    refreshAll();
+}
+
+function setCurrentDate() {
+    const now = new Date();
+    document.getElementById('currentDate').textContent = now.toLocaleDateString('ar-EG', {
+        weekday: 'long', year: 'numeric', month: 'long', day: 'numeric'
+    });
+}
+
+function setDefaultDates() {
+    const today = new Date().toISOString().split('T')[0];
+    ['expenseDate', 'saleDate', 'repayDate'].forEach(id => {
+        const el = document.getElementById(id);
+        if (el) el.value = today;
+    });
+    const first = new Date(); first.setDate(1);
+    const fromEl = document.getElementById('reportFrom');
+    const toEl = document.getElementById('reportTo');
+    if (fromEl) fromEl.value = first.toISOString().split('T')[0];
+    if (toEl) toEl.value = today;
+}
+
+// ==========================================
+// NAVIGATION
+// ==========================================
+function setupNavigation() {
+    const navItems = document.querySelectorAll('.nav-item');
+    const mobNavItems = document.querySelectorAll('.mob-nav-item[data-page]');
+    const sidebar = document.getElementById('sidebar');
+    const menuToggle = document.getElementById('menuToggle');
+    const mobMenuToggle = document.getElementById('mobMenuToggle');
+    const sidebarClose = document.getElementById('sidebarClose');
+    const sidebarBackdrop = document.getElementById('sidebarBackdrop');
+
+    function switchPage(page) {
+        navItems.forEach(n => n.classList.toggle('active', n.dataset.page === page));
+        mobNavItems.forEach(n => n.classList.toggle('active', n.dataset.page === page));
+        document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
+        const targetPage = document.getElementById(`page-${page}`);
+        if (targetPage) targetPage.classList.add('active');
+        closeSidebar();
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+        refreshAll();
+    }
+
+    function openSidebar() {
+        sidebar.classList.add('open');
+        if (sidebarBackdrop) sidebarBackdrop.classList.add('show');
+    }
+
+    function closeSidebar() {
+        sidebar.classList.remove('open');
+        if (sidebarBackdrop) sidebarBackdrop.classList.remove('show');
+    }
+
+    navItems.forEach(item => {
+        item.addEventListener('click', (e) => {
+            e.preventDefault();
+            switchPage(item.dataset.page);
+        });
+    });
+
+    mobNavItems.forEach(item => {
+        item.addEventListener('click', (e) => {
+            e.preventDefault();
+            switchPage(item.dataset.page);
+        });
+    });
+
+    if (menuToggle) menuToggle.addEventListener('click', openSidebar);
+    if (mobMenuToggle) mobMenuToggle.addEventListener('click', (e) => {
+        e.preventDefault();
+        openSidebar();
+    });
+    if (sidebarClose) sidebarClose.addEventListener('click', closeSidebar);
+    if (sidebarBackdrop) sidebarBackdrop.addEventListener('click', closeSidebar);
+
+    document.addEventListener('keydown', (e) => {
+        if (e.key === 'Escape') closeSidebar();
+    });
+}
+
+// ==========================================
+// FORMS SETUP
+// ==========================================
+function setupForms() {
+    // Expense Form
+    document.getElementById('expenseForm').addEventListener('submit', (e) => {
+        e.preventDefault();
+        const expense = {
+            id: Store.id(),
+            description: val('expenseDesc'),
+            amount: num('expenseAmount'),
+            date: val('expenseDate'),
+            type: val('expenseType'),
+            source: val('expenseSource'),
+            category: val('expenseCategory'),
+            createdAt: new Date().toISOString()
+        };
+        const list = Store.get('expenses');
+        list.push(expense);
+        Store.set('expenses', list);
+        e.target.reset(); setDefaultDates();
+        showToast('تم إضافة المصروف بنجاح ✅');
+        refreshAll();
+    });
+
+    // Repayment Form
+    document.getElementById('repaymentForm').addEventListener('submit', (e) => {
+        e.preventDefault();
+        const repayment = {
+            id: Store.id(),
+            to: val('repayTo'),
+            amount: num('repayAmount'),
+            date: val('repayDate'),
+            notes: val('repayNotes'),
+            createdAt: new Date().toISOString()
+        };
+        const list = Store.get('repayments');
+        list.push(repayment);
+        Store.set('repayments', list);
+        e.target.reset(); setDefaultDates();
+        showToast('تم تسجيل السداد بنجاح ✅');
+        refreshAll();
+    });
+
+    // Sales Form
+    document.getElementById('salesForm').addEventListener('submit', (e) => {
+        e.preventDefault();
+        const products = Store.get('products');
+        const productId = val('saleProduct');
+        const product = products.find(p => p.id === productId);
+
+        const custName = val('saleCustomerName').trim();
+        const custPhone = val('saleCustomerPhone').trim();
+        const custAddress = val('saleCustomerAddress').trim();
+        const custCity = val('saleCustomerCity');
+
+        const sale = {
+            id: Store.id(),
+            productId,
+            productName: product ? product.name : 'غير محدد',
+            productCost: product ? product.cost : 0,
+            quantity: parseInt(val('saleQuantity')) || 1,
+            price: num('salePrice'),
+            date: val('saleDate'),
+            customer: {
+                name: custName,
+                phone: custPhone,
+                address: custAddress,
+                city: custCity
+            },
+            notes: val('saleNotes'),
+            createdAt: new Date().toISOString()
+        };
+
+        const sales = Store.get('sales');
+        sales.push(sale);
+        Store.set('sales', sales);
+
+        // Automatically register customer in customers list if not already saved
+        if (custName || custPhone) {
+            const custList = Store.get('customers');
+            const existing = custList.find(c => (custPhone && c.phone === custPhone) || c.name === custName);
+            if (!existing) {
+                custList.push({
+                    id: Store.id(),
+                    name: custName,
+                    phone: custPhone,
+                    city: custCity,
+                    address: custAddress,
+                    notes: '',
+                    createdAt: new Date().toISOString()
+                });
+                Store.set('customers', custList);
+            } else {
+                if (custAddress && !existing.address) existing.address = custAddress;
+                if (custCity && !existing.city) existing.city = custCity;
+                Store.set('customers', custList);
+            }
+        }
+
+        // Update stock
+        if (product) {
+            product.stock = Math.max(0, product.stock - sale.quantity);
+            Store.set('products', products);
+        }
+
+        e.target.reset(); setDefaultDates();
+        showToast('تم تسجيل البيع بنجاح ✅');
+        refreshAll();
+    });
+
+    // Customer Form (Direct addition from Customers Page)
+    const customerForm = document.getElementById('customerForm');
+    if (customerForm) {
+        customerForm.addEventListener('submit', (e) => {
+            e.preventDefault();
+            const customer = {
+                id: Store.id(),
+                name: val('custName').trim(),
+                phone: val('custPhone').trim(),
+                city: val('custCity'),
+                address: val('custAddress').trim(),
+                notes: val('custNotes').trim(),
+                createdAt: new Date().toISOString()
+            };
+
+            const custList = Store.get('customers');
+            const existingIdx = custList.findIndex(c => (customer.phone && c.phone === customer.phone) || c.name === customer.name);
+            if (existingIdx >= 0) {
+                custList[existingIdx] = { ...custList[existingIdx], ...customer };
+            } else {
+                custList.push(customer);
+            }
+            Store.set('customers', custList);
+
+            e.target.reset();
+            showToast('تم حفظ بيانات العميل بنجاح ✅');
+            refreshAll();
+        });
+    }
+
+    // Auto-fill customer in Sales form when picked from dropdown
+    const saleCustSelect = document.getElementById('saleCustomerSelect');
+    if (saleCustSelect) {
+        saleCustSelect.addEventListener('change', () => {
+            const custId = saleCustSelect.value;
+            if (!custId) {
+                document.getElementById('saleCustomerName').value = '';
+                document.getElementById('saleCustomerPhone').value = '';
+                document.getElementById('saleCustomerCity').value = '';
+                document.getElementById('saleCustomerAddress').value = '';
+                return;
+            }
+            const customers = getAllCustomers();
+            const cust = customers.find(c => c.id === custId || c.phone === custId);
+            if (cust) {
+                document.getElementById('saleCustomerName').value = cust.name || '';
+                document.getElementById('saleCustomerPhone').value = cust.phone || '';
+                document.getElementById('saleCustomerCity').value = cust.city || '';
+                document.getElementById('saleCustomerAddress').value = cust.address || '';
+            }
+        });
+    }
+
+    // Product Form
+    document.getElementById('productForm').addEventListener('submit', (e) => {
+        e.preventDefault();
+        const product = {
+            id: Store.id(),
+            name: val('productName'),
+            cost: num('productCost'),
+            price: num('productPrice'),
+            stock: parseInt(val('productStock')) || 0,
+            createdAt: new Date().toISOString()
+        };
+        const list = Store.get('products');
+        list.push(product);
+        Store.set('products', list);
+        e.target.reset();
+        showToast('تم إضافة المنتج بنجاح ✅');
+        refreshAll();
+    });
+}
+
+// ==========================================
+// FILTERS
+// ==========================================
+function setupFilters() {
+    ['filterExpenseSource', 'filterExpenseType', 'filterExpenseCategory'].forEach(id => {
+        document.getElementById(id).addEventListener('change', renderExpensesTable);
+    });
+    document.getElementById('customerSearch').addEventListener('input', renderCustomersTable);
+}
+
+// ==========================================
+// REFRESH ALL
+// ==========================================
+function refreshAll() {
+    refreshDashboard();
+    renderExpensesTable();
+    renderRepaymentsTable();
+    renderSalesTable();
+    renderProductsTable();
+    renderCustomersTable();
+    populateProductSelect();
+    populateCustomerSelect();
+    refreshProfits();
+    refreshBalances();
+    renderBestSellers('bestSellers');
+    renderBestSellers('salesBestSellers');
+}
+
+// ==========================================
+// BALANCE CALCULATIONS
+// ==========================================
+function getBalances() {
+    const expenses = Store.get('expenses');
+    const repayments = Store.get('repayments');
+
+    const ownerTotal = expenses.filter(e => e.source === 'owner').reduce((s, e) => s + e.amount, 0);
+    const amrTotal = expenses.filter(e => e.source === 'amr').reduce((s, e) => s + e.amount, 0);
+    const ownerPaid = repayments.filter(r => r.to === 'owner').reduce((s, r) => s + r.amount, 0);
+    const amrPaid = repayments.filter(r => r.to === 'amr').reduce((s, r) => s + r.amount, 0);
+
+    return {
+        ownerTotal, amrTotal, ownerPaid, amrPaid,
+        ownerRemaining: ownerTotal - ownerPaid,
+        amrRemaining: amrTotal - amrPaid
+    };
+}
+
+function refreshBalances() {
+    const b = getBalances();
+
+    // Dashboard balances
+    setText('dash_ownerTotal', fmt(b.ownerTotal));
+    setText('dash_ownerPaid', fmt(b.ownerPaid));
+    setText('dash_ownerRemaining', fmt(b.ownerRemaining));
+    setText('dash_amrTotal', fmt(b.amrTotal));
+    setText('dash_amrPaid', fmt(b.amrPaid));
+    setText('dash_amrRemaining', fmt(b.amrRemaining));
+
+    // Repayments page balances
+    setText('rep_ownerTotal', fmt(b.ownerTotal));
+    setText('rep_ownerPaid', fmt(b.ownerPaid));
+    setText('rep_ownerRemaining', fmt(b.ownerRemaining));
+    setText('rep_amrTotal', fmt(b.amrTotal));
+    setText('rep_amrPaid', fmt(b.amrPaid));
+    setText('rep_amrRemaining', fmt(b.amrRemaining));
+
+    // Profits page balances
+    setText('p_ownerExp', fmt(b.ownerTotal));
+    setText('p_ownerPaid', fmt(b.ownerPaid));
+    setText('p_ownerRem', fmt(b.ownerRemaining));
+    setText('p_amrExp', fmt(b.amrTotal));
+    setText('p_amrPaid', fmt(b.amrPaid));
+    setText('p_amrRem', fmt(b.amrRemaining));
+
+    const totalExp = b.ownerTotal + b.amrTotal;
+    setText('p_ownerPct', totalExp > 0 ? ((b.ownerTotal / totalExp) * 100).toFixed(1) + '%' : '0%');
+    setText('p_amrPct', totalExp > 0 ? ((b.amrTotal / totalExp) * 100).toFixed(1) + '%' : '0%');
+}
+
+// ==========================================
+// DASHBOARD
+// ==========================================
+function refreshDashboard() {
+    const expenses = Store.get('expenses');
+    const sales = Store.get('sales');
+    const today = new Date().toISOString().split('T')[0];
+
+    const totalExp = expenses.reduce((s, e) => s + e.amount, 0);
+    const totalSales = sales.reduce((s, sa) => s + (sa.price * sa.quantity), 0);
+    const totalCost = sales.reduce((s, sa) => s + (sa.productCost * sa.quantity), 0);
+    const todayExp = expenses.filter(e => e.date === today).reduce((s, e) => s + e.amount, 0);
+
+    setText('totalExpenses', fmt(totalExp));
+    setText('totalSales', fmt(totalSales));
+    setText('totalProfits', fmt(totalSales - totalExp - totalCost));
+    setText('todayExpenses', fmt(todayExp));
+
+    renderRecentTransactions();
+    renderWeeklyChart();
+    renderExpensesPieChart();
+}
+
+function renderRecentTransactions() {
+    const expenses = Store.get('expenses');
+    const sales = Store.get('sales');
+    let txns = [];
+
+    expenses.forEach(e => txns.push({
+        date: e.date, type: 'مصروف', typeClass: 'badge-expense',
+        desc: e.description, amount: e.amount, isExpense: true,
+        source: SOURCES[e.source], sourceClass: e.source === 'owner' ? 'badge-owner' : 'badge-amr'
+    }));
+
+    sales.forEach(s => txns.push({
+        date: s.date, type: 'بيع', typeClass: 'badge-sale',
+        desc: s.productName + (s.customer?.name ? ` — ${s.customer.name}` : ''),
+        amount: s.price * s.quantity, isExpense: false,
+        source: '-', sourceClass: ''
+    }));
+
+    txns.sort((a, b) => new Date(b.date) - new Date(a.date));
+    txns = txns.slice(0, 10);
+
+    const tbody = document.getElementById('recentTransactions');
+    if (!txns.length) {
+        tbody.innerHTML = '<tr><td colspan="5" class="empty-state"><i class="fas fa-inbox"></i><p>لا توجد عمليات بعد</p></td></tr>';
+        return;
+    }
+
+    tbody.innerHTML = txns.map(t => `<tr>
+        <td>${fmtDate(t.date)}</td>
+        <td><span class="badge ${t.typeClass}">${t.type}</span></td>
+        <td>${t.desc}</td>
+        <td style="font-weight:800;color:${t.isExpense ? 'var(--danger)' : 'var(--success)'}">
+            ${t.isExpense ? '-' : '+'}${fmt(t.amount)}
+        </td>
+        <td>${t.sourceClass ? `<span class="badge ${t.sourceClass}">${t.source}</span>` : '-'}</td>
+    </tr>`).join('');
+}
+
+// ==========================================
+// BEST SELLERS
+// ==========================================
+function renderBestSellers(containerId) {
+    const sales = Store.get('sales');
+    const productMap = {};
+
+    sales.forEach(s => {
+        if (!productMap[s.productName]) {
+            productMap[s.productName] = { name: s.productName, count: 0, revenue: 0 };
+        }
+        productMap[s.productName].count += s.quantity;
+        productMap[s.productName].revenue += s.price * s.quantity;
+    });
+
+    const sorted = Object.values(productMap).sort((a, b) => b.count - a.count);
+    const container = document.getElementById(containerId);
+
+    if (!sorted.length) {
+        container.innerHTML = '<div class="empty-state"><i class="fas fa-medal"></i><p>لا توجد مبيعات بعد</p></div>';
+        return;
+    }
+
+    const rankClasses = ['gold', 'silver', 'bronze'];
+
+    container.innerHTML = sorted.slice(0, 6).map((p, i) => `
+        <div class="best-seller-card">
+            <div class="bs-rank ${rankClasses[i] || 'normal'}">${i + 1}</div>
+            <div class="bs-icon"><i class="fas fa-spray-can"></i></div>
+            <div class="bs-name">${p.name}</div>
+            <div class="bs-count">${p.count}</div>
+            <div class="bs-label">قطعة مباعة</div>
+            <div style="font-size:0.8rem;color:var(--success);font-weight:700;margin-top:4px">${fmt(p.revenue)}</div>
+        </div>
+    `).join('');
+}
+
+// ==========================================
+// CHARTS
+// ==========================================
+let charts = {};
+
+function destroyChart(name) {
+    if (charts[name]) { charts[name].destroy(); charts[name] = null; }
+}
+
+function renderWeeklyChart() {
+    const ctx = document.getElementById('weeklyChart');
+    if (!ctx) return;
+    destroyChart('weekly');
+
+    const expenses = Store.get('expenses');
+    const sales = Store.get('sales');
+    const labels = [], expD = [], salD = [];
+
+    for (let i = 6; i >= 0; i--) {
+        const d = new Date(); d.setDate(d.getDate() - i);
+        const ds = d.toISOString().split('T')[0];
+        labels.push(d.toLocaleDateString('ar-EG', { weekday: 'short', day: 'numeric' }));
+        expD.push(expenses.filter(e => e.date === ds).reduce((s, e) => s + e.amount, 0));
+        salD.push(sales.filter(s => s.date === ds).reduce((s, sa) => s + (sa.price * sa.quantity), 0));
+    }
+
+    charts.weekly = new Chart(ctx, {
+        type: 'bar',
+        data: {
+            labels,
+            datasets: [
+                { label: 'المصروفات', data: expD, backgroundColor: 'rgba(255,23,68,0.7)', borderColor: '#FF1744', borderWidth: 2, borderRadius: 8 },
+                { label: 'المبيعات', data: salD, backgroundColor: 'rgba(0,200,83,0.7)', borderColor: '#00C853', borderWidth: 2, borderRadius: 8 }
+            ]
+        },
+        options: chartOptions()
+    });
+}
+
+function renderExpensesPieChart() {
+    const ctx = document.getElementById('expensesPieChart');
+    if (!ctx) return;
+    destroyChart('pie');
+
+    const expenses = Store.get('expenses');
+    const catData = {};
+    expenses.forEach(e => {
+        const c = CATEGORIES[e.category] || e.category;
+        catData[c] = (catData[c] || 0) + e.amount;
+    });
+
+    const labels = Object.keys(catData);
+    const data = Object.values(catData);
+    if (!labels.length) { labels.push('لا توجد بيانات'); data.push(1); }
+
+    const colors = ['#FF1744', '#2979FF', '#00C853', '#FFB300', '#AA00FF', '#00BCD4', '#FF6D00', '#607D8B', '#E91E63'];
+
+    charts.pie = new Chart(ctx, {
+        type: 'doughnut',
+        data: { labels, datasets: [{ data, backgroundColor: colors.slice(0, labels.length), borderWidth: 3, borderColor: '#fff' }] },
+        options: { responsive: true, plugins: { legend: { position: 'bottom', labels: { font: { family: 'Cairo', weight: 'bold', size: 11 }, padding: 12 } } } }
+    });
+}
+
+function renderMonthlyProfitChart() {
+    const ctx = document.getElementById('monthlyProfitChart');
+    if (!ctx) return;
+    destroyChart('monthly');
+
+    const expenses = Store.get('expenses');
+    const sales = Store.get('sales');
+    const months = {};
+    const now = new Date();
+
+    for (let i = 5; i >= 0; i--) {
+        const d = new Date(now.getFullYear(), now.getMonth() - i, 1);
+        const key = `${d.getFullYear()}-${String(d.getMonth() + 1).padStart(2, '0')}`;
+        months[key] = { sales: 0, expenses: 0 };
+    }
+
+    expenses.forEach(e => { const k = e.date.substring(0, 7); if (months[k]) months[k].expenses += e.amount; });
+    sales.forEach(s => { const k = s.date.substring(0, 7); if (months[k]) months[k].sales += s.price * s.quantity; });
+
+    const labels = Object.keys(months).map(k => {
+        const [y, m] = k.split('-');
+        return new Date(y, m - 1).toLocaleDateString('ar-EG', { month: 'short', year: 'numeric' });
+    });
+
+    charts.monthly = new Chart(ctx, {
+        type: 'line',
+        data: {
+            labels,
+            datasets: [
+                { label: 'المبيعات', data: Object.values(months).map(m => m.sales), borderColor: '#00C853', backgroundColor: 'rgba(0,200,83,0.1)', fill: true, tension: 0.4, borderWidth: 3, pointRadius: 5 },
+                { label: 'المصروفات', data: Object.values(months).map(m => m.expenses), borderColor: '#FF1744', backgroundColor: 'rgba(255,23,68,0.1)', fill: true, tension: 0.4, borderWidth: 3, pointRadius: 5 },
+                { label: 'الربح', data: Object.values(months).map(m => m.sales - m.expenses), borderColor: '#AA00FF', backgroundColor: 'rgba(170,0,255,0.1)', fill: true, tension: 0.4, borderWidth: 3, pointRadius: 5 }
+            ]
+        },
+        options: chartOptions()
+    });
+}
+
+function renderSourceChart() {
+    const ctx = document.getElementById('sourceChart');
+    if (!ctx) return;
+    destroyChart('source');
+
+    const b = getBalances();
+
+    charts.source = new Chart(ctx, {
+        type: 'doughnut',
+        data: {
+            labels: ['صاحب المشروع', 'عمرو'],
+            datasets: [{ data: [b.ownerTotal || 0, b.amrTotal || 0], backgroundColor: ['#8B1A1A', '#2979FF'], borderWidth: 3, borderColor: '#fff' }]
+        },
+        options: { responsive: true, plugins: { legend: { position: 'bottom', labels: { font: { family: 'Cairo', weight: 'bold', size: 13 }, padding: 20 } } } }
+    });
+}
+
+function chartOptions() {
+    return {
+        responsive: true,
+        plugins: { legend: { position: 'top', labels: { font: { family: 'Cairo', weight: 'bold' } } } },
+        scales: {
+            y: { beginAtZero: true, ticks: { font: { family: 'Cairo' } } },
+            x: { ticks: { font: { family: 'Cairo' } } }
+        }
+    };
+}
+
+// ==========================================
+// EXPENSES TABLE
+// ==========================================
+function renderExpensesTable() {
+    let expenses = Store.get('expenses');
+    const sf = val('filterExpenseSource'), tf = val('filterExpenseType'), cf = val('filterExpenseCategory');
+    if (sf !== 'all') expenses = expenses.filter(e => e.source === sf);
+    if (tf !== 'all') expenses = expenses.filter(e => e.type === tf);
+    if (cf !== 'all') expenses = expenses.filter(e => e.category === cf);
+    expenses.sort((a, b) => new Date(b.date) - new Date(a.date));
+
+    const tbody = document.getElementById('expensesTable');
+    if (!expenses.length) {
+        tbody.innerHTML = '<tr><td colspan="7" class="empty-state"><i class="fas fa-receipt"></i><p>لا توجد مصروفات</p></td></tr>';
+        return;
+    }
+
+    tbody.innerHTML = expenses.map(e => `<tr>
+        <td>${fmtDate(e.date)}</td>
+        <td>${e.description}</td>
+        <td style="font-weight:800;color:var(--danger)">${fmt(e.amount)}</td>
+        <td><span class="badge ${e.type === 'daily' ? 'badge-daily' : 'badge-monthly'}">${TYPES[e.type]}</span></td>
+        <td><span class="badge ${e.source === 'owner' ? 'badge-owner' : 'badge-amr'}">${SOURCES[e.source]}</span></td>
+        <td>${CATEGORIES[e.category] || e.category}</td>
+        <td><button class="btn btn-danger btn-sm" onclick="deleteItem('expenses','${e.id}')"><i class="fas fa-trash"></i></button></td>
+    </tr>`).join('');
+}
+
+// ==========================================
+// REPAYMENTS TABLE
+// ==========================================
+function renderRepaymentsTable() {
+    const repayments = Store.get('repayments');
+    repayments.sort((a, b) => new Date(b.date) - new Date(a.date));
+
+    const tbody = document.getElementById('repaymentsTable');
+    if (!repayments.length) {
+        tbody.innerHTML = '<tr><td colspan="5" class="empty-state"><i class="fas fa-hand-holding-usd"></i><p>لا يوجد سجل سداد</p></td></tr>';
+        return;
+    }
+
+    tbody.innerHTML = repayments.map(r => `<tr>
+        <td>${fmtDate(r.date)}</td>
+        <td><span class="badge ${r.to === 'owner' ? 'badge-owner' : 'badge-amr'}">${SOURCES[r.to]}</span></td>
+        <td style="font-weight:800;color:var(--success)">${fmt(r.amount)}</td>
+        <td>${r.notes || '-'}</td>
+        <td><button class="btn btn-danger btn-sm" onclick="deleteItem('repayments','${r.id}')"><i class="fas fa-trash"></i></button></td>
+    </tr>`).join('');
+}
+
+// ==========================================
+// SALES TABLE
+// ==========================================
+function renderSalesTable() {
+    const sales = Store.get('sales');
+    sales.sort((a, b) => new Date(b.date) - new Date(a.date));
+
+    const tbody = document.getElementById('salesTable');
+    if (!sales.length) {
+        tbody.innerHTML = '<tr><td colspan="9" class="empty-state"><i class="fas fa-shopping-bag"></i><p>لا توجد مبيعات</p></td></tr>';
+        return;
+    }
+
+    tbody.innerHTML = sales.map(s => `<tr>
+        <td>${fmtDate(s.date)}</td>
+        <td style="font-weight:700">${s.productName}</td>
+        <td>${s.quantity}</td>
+        <td>${fmt(s.price)}</td>
+        <td style="font-weight:800;color:var(--success)">${fmt(s.price * s.quantity)}</td>
+        <td>${s.customer?.name || '-'}</td>
+        <td>${s.customer?.phone || '-'}</td>
+        <td>${s.customer?.city || '-'}</td>
+        <td><button class="btn btn-danger btn-sm" onclick="deleteItem('sales','${s.id}')"><i class="fas fa-trash"></i></button></td>
+    </tr>`).join('');
+}
+
+// ==========================================
+// PRODUCTS TABLE
+// ==========================================
+function renderProductsTable() {
+    const products = Store.get('products');
+    const sales = Store.get('sales');
+
+    const tbody = document.getElementById('productsTable');
+    if (!products.length) {
+        tbody.innerHTML = '<tr><td colspan="8" class="empty-state"><i class="fas fa-box-open"></i><p>لا توجد منتجات</p></td></tr>';
+        return;
+    }
+
+    tbody.innerHTML = products.map(p => {
+        const margin = p.price - p.cost;
+        const pct = p.cost > 0 ? ((margin / p.cost) * 100).toFixed(1) : 0;
+        const sold = sales.filter(s => s.productId === p.id).reduce((sum, s) => sum + s.quantity, 0);
+        return `<tr>
+            <td style="font-weight:700">${p.name}</td>
+            <td>${fmt(p.cost)}</td>
+            <td>${fmt(p.price)}</td>
+            <td style="font-weight:800;color:${margin >= 0 ? 'var(--success)' : 'var(--danger)'}">${fmt(margin)}</td>
+            <td><span class="badge ${margin >= 0 ? 'badge-sale' : 'badge-expense'}">${pct}%</span></td>
+            <td>${p.stock}</td>
+            <td>${sold}</td>
+            <td><button class="btn btn-danger btn-sm" onclick="deleteItem('products','${p.id}')"><i class="fas fa-trash"></i></button></td>
+        </tr>`;
+    }).join('');
+}
+
+function populateProductSelect() {
+    const products = Store.get('products');
+    const select = document.getElementById('saleProduct');
+    if (!select) return;
+    select.innerHTML = '<option value="">اختر المنتج</option>';
+    products.forEach(p => {
+        const opt = document.createElement('option');
+        opt.value = p.id;
+        opt.textContent = `${p.name} — ${fmt(p.price)} (متاح: ${p.stock})`;
+        select.appendChild(opt);
+    });
+}
+
+function getAllCustomers() {
+    const explicit = Store.get('customers');
+    const sales = Store.get('sales');
+    const map = {};
+
+    explicit.forEach(c => {
+        const key = c.phone || c.name || c.id;
+        map[key] = {
+            id: c.id,
+            name: c.name || '-',
+            phone: c.phone || '',
+            city: c.city || '',
+            address: c.address || '',
+            notes: c.notes || '',
+            orders: 0,
+            total: 0,
+            lastOrder: c.createdAt || null,
+            products: new Set(),
+            isExplicit: true
+        };
+    });
+
+    sales.forEach(s => {
+        const key = s.customer?.phone || s.customer?.name || 'unknown';
+        if (!map[key]) {
+            map[key] = {
+                id: Store.id(),
+                name: s.customer?.name || '-',
+                phone: s.customer?.phone || '',
+                city: s.customer?.city || '',
+                address: s.customer?.address || '',
+                notes: '',
+                orders: 0,
+                total: 0,
+                lastOrder: s.date,
+                products: new Set(),
+                isExplicit: false
+            };
+        }
+        const c = map[key];
+        c.orders += 1;
+        c.total += s.price * s.quantity;
+        if (!c.lastOrder || s.date > c.lastOrder) c.lastOrder = s.date;
+        if (s.productName) c.products.add(s.productName);
+        if (s.customer?.name && c.name === '-') c.name = s.customer.name;
+        if (s.customer?.city && !c.city) c.city = s.customer.city;
+        if (s.customer?.address && !c.address) c.address = s.customer.address;
+    });
+
+    return Object.values(map);
+}
+
+function populateCustomerSelect() {
+    const select = document.getElementById('saleCustomerSelect');
+    if (!select) return;
+    const currentVal = select.value;
+    select.innerHTML = '<option value="">-- عميل جديد (اكتب بياناته بالأسفل) --</option>';
+    const customers = getAllCustomers();
+    customers.sort((a, b) => (a.name || '').localeCompare(b.name || ''));
+    customers.forEach(c => {
+        const opt = document.createElement('option');
+        opt.value = c.id || c.phone;
+        opt.textContent = `${c.name} ${c.phone ? '— ' + c.phone : ''} ${c.city ? '(' + c.city + ')' : ''}`;
+        if (opt.value === currentVal) opt.selected = true;
+        select.appendChild(opt);
+    });
+}
+
+// ==========================================
+// CUSTOMERS TABLE
+// ==========================================
+function renderCustomersTable() {
+    const searchTerm = (val('customerSearch') || '').toLowerCase();
+    let customers = getAllCustomers();
+
+    if (searchTerm) {
+        customers = customers.filter(c =>
+            (c.name || '').toLowerCase().includes(searchTerm) ||
+            (c.phone || '').includes(searchTerm) ||
+            (c.city || '').toLowerCase().includes(searchTerm)
+        );
+    }
+
+    customers.sort((a, b) => b.total - a.total);
+
+    const tbody = document.getElementById('customersTable');
+    if (!customers.length) {
+        tbody.innerHTML = '<tr><td colspan="9" class="empty-state"><i class="fas fa-users"></i><p>لا يوجد عملاء مسجلين بعد</p></td></tr>';
+        return;
+    }
+
+    tbody.innerHTML = customers.map(c => `<tr>
+        <td style="font-weight:700">${c.name}</td>
+        <td>${c.phone || '-'}</td>
+        <td>${c.city || '-'}</td>
+        <td>${c.address || '-'}</td>
+        <td style="text-align:center;font-weight:700">${c.orders}</td>
+        <td style="font-weight:800;color:var(--success)">${fmt(c.total)}</td>
+        <td>${fmtDate(c.lastOrder)}</td>
+        <td style="font-size:0.8rem">${[...c.products].join('، ') || '-'}</td>
+        <td>
+            <button class="btn btn-danger btn-sm" onclick="deleteCustomer('${c.id}', '${c.phone}')" title="حذف العميل">
+                <i class="fas fa-trash"></i>
+            </button>
+        </td>
+    </tr>`).join('');
+}
+
+function deleteCustomer(id, phone) {
+    const modal = document.getElementById('deleteModal');
+    modal.classList.add('show');
+    document.getElementById('confirmDelete').onclick = () => {
+        let list = Store.get('customers');
+        list = list.filter(c => c.id !== id && c.phone !== phone);
+        Store.set('customers', list);
+        closeModal();
+        showToast('تم حذف العميل بنجاح 🗑️');
+        refreshAll();
+    };
+}
+
+// ==========================================
+// PROFITS
+// ==========================================
+function refreshProfits() {
+    const expenses = Store.get('expenses');
+    const sales = Store.get('sales');
+
+    const totalSales = sales.reduce((s, sa) => s + (sa.price * sa.quantity), 0);
+    const totalCost = sales.reduce((s, sa) => s + (sa.productCost * sa.quantity), 0);
+    const totalAds = expenses.reduce((s, e) => s + e.amount, 0);
+
+    setText('profitTotalSales', fmt(totalSales));
+    setText('profitTotalCost', fmt(totalCost));
+    setText('profitTotalAds', fmt(totalAds));
+    setText('profitNet', fmt(totalSales - totalCost - totalAds));
+
+    renderMonthlyProfitChart();
+    renderSourceChart();
+}
+
+// ==========================================
+// REPORTS
+// ==========================================
+function generateReport() {
+    const from = val('reportFrom'), to = val('reportTo');
+    const expenses = Store.get('expenses').filter(e => e.date >= from && e.date <= to);
+    const sales = Store.get('sales').filter(s => s.date >= from && s.date <= to);
+    const repayments = Store.get('repayments').filter(r => r.date >= from && r.date <= to);
+
+    const totalExp = expenses.reduce((s, e) => s + e.amount, 0);
+    const totalSal = sales.reduce((s, sa) => s + (sa.price * sa.quantity), 0);
+    const totalCost = sales.reduce((s, sa) => s + (sa.productCost * sa.quantity), 0);
+    const ownerExp = expenses.filter(e => e.source === 'owner').reduce((s, e) => s + e.amount, 0);
+    const amrExp = expenses.filter(e => e.source === 'amr').reduce((s, e) => s + e.amount, 0);
+    const ownerPaid = repayments.filter(r => r.to === 'owner').reduce((s, r) => s + r.amount, 0);
+    const amrPaid = repayments.filter(r => r.to === 'amr').reduce((s, r) => s + r.amount, 0);
+    const profit = totalSal - totalExp - totalCost;
+
+    document.getElementById('reportSummary').innerHTML = `
+        <div class="report-metric"><div class="label">إجمالي المبيعات</div><div class="value" style="color:var(--success)">${fmt(totalSal)}</div></div>
+        <div class="report-metric"><div class="label">إجمالي المصروفات</div><div class="value" style="color:var(--danger)">${fmt(totalExp)}</div></div>
+        <div class="report-metric"><div class="label">تكلفة المنتجات</div><div class="value" style="color:var(--warning)">${fmt(totalCost)}</div></div>
+        <div class="report-metric"><div class="label">صافي الربح</div><div class="value" style="color:${profit >= 0 ? 'var(--success)' : 'var(--danger)'}">${fmt(profit)}</div></div>
+        <div class="report-metric"><div class="label">مصروفات صاحب المشروع</div><div class="value">${fmt(ownerExp)}</div></div>
+        <div class="report-metric"><div class="label">سداد صاحب المشروع</div><div class="value" style="color:var(--success)">${fmt(ownerPaid)}</div></div>
+        <div class="report-metric"><div class="label">مصروفات عمرو</div><div class="value">${fmt(amrExp)}</div></div>
+        <div class="report-metric"><div class="label">سداد عمرو</div><div class="value" style="color:var(--success)">${fmt(amrPaid)}</div></div>
+    `;
+
+    document.getElementById('reportExpenses').innerHTML = expenses.length === 0
+        ? '<tr><td colspan="5" class="empty-state"><p>لا توجد مصروفات</p></td></tr>'
+        : expenses.map(e => `<tr>
+            <td>${fmtDate(e.date)}</td><td>${e.description}</td>
+            <td style="font-weight:800">${fmt(e.amount)}</td>
+            <td><span class="badge ${e.source === 'owner' ? 'badge-owner' : 'badge-amr'}">${SOURCES[e.source]}</span></td>
+            <td>${CATEGORIES[e.category] || e.category}</td>
+        </tr>`).join('');
+
+    document.getElementById('reportSales').innerHTML = sales.length === 0
+        ? '<tr><td colspan="5" class="empty-state"><p>لا توجد مبيعات</p></td></tr>'
+        : sales.map(s => `<tr>
+            <td>${fmtDate(s.date)}</td><td>${s.productName}</td>
+            <td>${s.customer?.name || '-'}</td><td>${s.quantity}</td>
+            <td style="font-weight:800">${fmt(s.price * s.quantity)}</td>
+        </tr>`).join('');
+}
+
+function exportCSV() {
+    const from = val('reportFrom'), to = val('reportTo');
+    const expenses = Store.get('expenses').filter(e => e.date >= from && e.date <= to);
+    const sales = Store.get('sales').filter(s => s.date >= from && s.date <= to);
+
+    let csv = '\uFEFF';
+    csv += 'التاريخ,النوع,الوصف,المبلغ,المصدر,التصنيف,العميل,الموبايل,المحافظة\n';
+
+    expenses.forEach(e => {
+        csv += `${e.date},مصروف,"${e.description}",${e.amount},${SOURCES[e.source]},${CATEGORIES[e.category]},-,-,-\n`;
+    });
+
+    sales.forEach(s => {
+        csv += `${s.date},بيع,"${s.productName}",${s.price * s.quantity},-,-,"${s.customer?.name || ''}","${s.customer?.phone || ''}","${s.customer?.city || ''}"\n`;
+    });
+
+    const blob = new Blob([csv], { type: 'text/csv;charset=utf-8;' });
+    const link = document.createElement('a');
+    link.href = URL.createObjectURL(blob);
+    link.download = `Brada_Report_${from}_${to}.csv`;
+    link.click();
+    showToast('تم تصدير التقرير بنجاح 📊');
+}
+
+// ==========================================
+// DELETE
+// ==========================================
+function deleteItem(collection, id) {
+    const modal = document.getElementById('deleteModal');
+    modal.classList.add('show');
+    document.getElementById('confirmDelete').onclick = () => {
+        let items = Store.get(collection);
+        items = items.filter(item => item.id !== id);
+        Store.set(collection, items);
+        closeModal();
+        showToast('تم الحذف بنجاح 🗑️');
+        refreshAll();
+    };
+}
+
+function closeModal() {
+    document.getElementById('deleteModal').classList.remove('show');
+}
+
+// ==========================================
+// UTILITIES
+// ==========================================
+function val(id) { return document.getElementById(id)?.value || ''; }
+function num(id) { return parseFloat(val(id)) || 0; }
+function setText(id, text) { const el = document.getElementById(id); if (el) el.textContent = text; }
+
+function fmt(amount) {
+    return new Intl.NumberFormat('ar-EG', { minimumFractionDigits: 2, maximumFractionDigits: 2 }).format(amount) + ' ج.م';
+}
+
+function fmtDate(d) {
+    if (!d) return '-';
+    return new Date(d).toLocaleDateString('ar-EG', { year: 'numeric', month: 'short', day: 'numeric' });
+}
+
+function showToast(msg) {
+    const t = document.getElementById('toast');
+    document.getElementById('toastMessage').textContent = msg;
+    t.classList.add('show');
+    setTimeout(() => t.classList.remove('show'), 3000);
+}
+
+</script>
+</body>
+</html>
