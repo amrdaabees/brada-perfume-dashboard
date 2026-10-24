@@ -1617,7 +1617,55 @@ a {
     }
 }
 
+
+/* Sync Badge in Topbar */
+.sync-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    padding: 5px 12px;
+    border-radius: 20px;
+    font-size: 0.78rem;
+    font-weight: 700;
+    transition: var(--transition);
+}
+
+.sync-badge.online {
+    background: rgba(0, 200, 83, 0.1);
+    color: #00C853;
+    border: 1px solid rgba(0, 200, 83, 0.25);
+}
+
+.sync-badge.offline {
+    background: rgba(255, 179, 0, 0.1);
+    color: #FFB300;
+    border: 1px solid rgba(255, 179, 0, 0.25);
+}
+
+.sync-badge .dot {
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    background: #00C853;
+    animation: sync-pulse 1.8s infinite;
+}
+
+.sync-badge .dot.offline {
+    background: #FFB300;
+    animation: none;
+}
+
+@keyframes sync-pulse {
+    0% { transform: scale(0.9); opacity: 0.7; }
+    50% { transform: scale(1.3); opacity: 1; }
+    100% { transform: scale(0.9); opacity: 0.7; }
+}
+
 </style>
+    <!-- Firebase SDK (Real-time Cloud Sync) -->
+    <script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore-compat.js"></script>
+
 </head>
 <body>
     <!-- Sidebar -->
@@ -1686,6 +1734,10 @@ a {
                 <span>Brada Perfume</span>
             </div>
             <div class="topbar-right">
+                <div class="sync-badge online" id="syncStatus">
+                    <span class="dot"></span>
+                    <span>مزامنة لحظية</span>
+                </div>
                 <div class="date-display">
                     <i class="fas fa-calendar-alt"></i>
                     <span id="currentDate"></span>
@@ -2333,6 +2385,81 @@ a {
     </div>
 
     <script>
+// ==========================================
+// GOOGLE FIREBASE REAL-TIME CLOUD SYNC
+// ==========================================
+const firebaseConfig = {
+  apiKey: "AIzaSyCSVJ7XznRPBeCyQdiYd35fvuh-1iVQLdI",
+  authDomain: "brada-perfume.firebaseapp.com",
+  projectId: "brada-perfume",
+  storageBucket: "brada-perfume.firebasestorage.app",
+  messagingSenderId: "904014321637",
+  appId: "1:904014321637:web:5ce55e84a175a437fd810c"
+};
+
+let db = null;
+let isCloudConnected = false;
+
+function initFirebaseSync() {
+    if (typeof firebase === 'undefined') {
+        console.warn('Firebase SDK not loaded, using local storage');
+        updateSyncUI(false);
+        return;
+    }
+    try {
+        if (!firebase.apps.length) {
+            firebase.initializeApp(firebaseConfig);
+        }
+        db = firebase.firestore();
+        updateSyncUI(true);
+
+        const collections = ['expenses', 'sales', 'products', 'customers', 'repayments'];
+        
+        collections.forEach(col => {
+            db.collection(col).onSnapshot(snapshot => {
+                const cloudItems = [];
+                snapshot.forEach(doc => {
+                    cloudItems.push(doc.data());
+                });
+
+                if (cloudItems.length > 0) {
+                    Store.set(col, cloudItems);
+                    refreshAll();
+                } else {
+                    const localItems = Store.get(col);
+                    if (localItems && localItems.length > 0) {
+                        localItems.forEach(item => {
+                            if (item.id) {
+                                db.collection(col).doc(item.id).set(item).catch(console.error);
+                            }
+                        });
+                    }
+                }
+            }, err => {
+                console.error('Firestore error on ' + col + ':', err);
+                updateSyncUI(false);
+            });
+        });
+
+    } catch (e) {
+        console.error('Error init Firebase:', e);
+        updateSyncUI(false);
+    }
+}
+
+function updateSyncUI(connected) {
+    isCloudConnected = connected;
+    const badge = document.getElementById('syncStatus');
+    if (!badge) return;
+    if (connected) {
+        badge.innerHTML = '<span class="dot"></span><span>مزامنة سحابية لحظية</span>';
+        badge.className = 'sync-badge online';
+    } else {
+        badge.innerHTML = '<span class="dot offline"></span><span>وضع محلي</span>';
+        badge.className = 'sync-badge offline';
+    }
+}
+
 /* ============================================
    BRADA PERFUME - Dashboard Application
    ============================================ */
@@ -2350,6 +2477,23 @@ const Store = {
     },
     id() {
         return Date.now().toString(36) + Math.random().toString(36).substr(2, 6);
+    },
+    save(col, item) {
+        const list = Store.get(col);
+        const idx = list.findIndex(i => i.id === item.id);
+        if (idx >= 0) list[idx] = item; else list.push(item);
+        Store.set(col, list);
+        if (db) {
+            db.collection(col).doc(item.id).set(item).catch(err => console.warn('Cloud save error:', err));
+        }
+    },
+    remove(col, id) {
+        let list = Store.get(col);
+        list = list.filter(i => i.id !== id);
+        Store.set(col, list);
+        if (db) {
+            db.collection(col).doc(id).delete().catch(err => console.warn('Cloud delete error:', err));
+        }
     }
 };
 
@@ -2382,6 +2526,7 @@ function initApp() {
     setupNavigation();
     setupForms();
     setupFilters();
+    initFirebaseSync();
     refreshAll();
 }
 
@@ -2484,7 +2629,7 @@ function setupForms() {
         };
         const list = Store.get('expenses');
         list.push(expense);
-        Store.set('expenses', list);
+        Store.save('expenses', expense);
         e.target.reset(); setDefaultDates();
         showToast('تم إضافة المصروف بنجاح ✅');
         refreshAll();
@@ -2503,7 +2648,7 @@ function setupForms() {
         };
         const list = Store.get('repayments');
         list.push(repayment);
-        Store.set('repayments', list);
+        Store.save('repayments', repayment);
         e.target.reset(); setDefaultDates();
         showToast('تم تسجيل السداد بنجاح ✅');
         refreshAll();
@@ -2541,7 +2686,7 @@ function setupForms() {
 
         const sales = Store.get('sales');
         sales.push(sale);
-        Store.set('sales', sales);
+        Store.save('sales', sale);
 
         // Automatically register customer in customers list if not already saved
         if (custName || custPhone) {
@@ -2642,7 +2787,7 @@ function setupForms() {
         };
         const list = Store.get('products');
         list.push(product);
-        Store.set('products', list);
+        Store.save('products', product);
         e.target.reset();
         showToast('تم إضافة المنتج بنجاح ✅');
         refreshAll();
@@ -3294,9 +3439,7 @@ function deleteItem(collection, id) {
     const modal = document.getElementById('deleteModal');
     modal.classList.add('show');
     document.getElementById('confirmDelete').onclick = () => {
-        let items = Store.get(collection);
-        items = items.filter(item => item.id !== id);
-        Store.set(collection, items);
+        Store.remove(collection, id);
         closeModal();
         showToast('تم الحذف بنجاح 🗑️');
         refreshAll();
